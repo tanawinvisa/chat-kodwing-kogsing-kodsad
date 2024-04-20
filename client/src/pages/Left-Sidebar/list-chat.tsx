@@ -96,39 +96,88 @@ const Chats: React.FC<allChatsProps> = ({
     };
   }, [username]);
 
+
+  const mockChatList = [
+    {
+      id: '1',
+      name: 'Chat 1',
+      chat: [
+        {
+          roomName: 'Room 1',
+          name: 'User1',
+          message: 'Hello',
+          isPrivate: false,
+          pin: false,
+        },
+      ],
+      isPrivate: false,
+      likedList: [],
+    },
+    {
+      id: '2',
+      name: 'Chat 2',
+      chat: [
+        {
+          roomName: 'Room 2',
+          name: 'User2',
+          message: 'How are you?',
+          isPrivate: true,
+          pin: false,
+        },
+      ],
+      isPrivate: true,
+      likedList: ['m3'],
+    },
+    {
+      id: '3',
+      name: 'Chat 3',
+      chat: [
+        {
+          roomName: 'Room 3',
+          name: 'User3',
+          message: 'Good morning',
+          isPrivate: false,
+          pin: false,
+        },
+      ],
+      isPrivate: false,
+      likedList: [],
+    },
+  ];
+
   return (
-    <div className="bg-bgColor w-1/3 border-r border-borderColor">
-      <div className="h-[20%] w-full border-b border-borderColor items-center flex justify-center">
-        <form
-          className="w-4/5 flex items-center relative"
-          onSubmit={handleSearch}
-        >
-          <input
-            type="text"
-            className="w-full h-12 rounded-2xl bg-borderColor pl-5 text-white pr-10"
-            placeholder="Search"
-            name="search_user"
-          />
-          <div className="absolute right-0 top-0 h-full w-10 text-center text-gray-400 pointer-events-none flex items-center justify-center">
-            <MagnifyingGlassIcon className="h-6 w-6 text-fontBgColor" />
-          </div>
-        </form>
+    <div className="bg-white w-1/3 border-r border-gray-200">
+  <div className="h-auto w-full border-b border-gray-200 items-center flex justify-center">
+    <form
+      className="w-4/5 flex items-center relative"
+      onSubmit={handleSearch}
+    >
+      <input
+        type="text"
+        className="w-full h-12 rounded-2xl bg-gray-200 pl-5 text-black pr-10"
+        placeholder="Search"
+        name="search_user"
+      />
+      <div className="absolute right-0 top-0 h-full w-10 text-center text-gray-400 pointer-events-none flex items-center justify-center">
+        <MagnifyingGlassIcon className="h-6 w-6 text-gray-500" />
       </div>
-      <div className="h-[80%] overflow-y-auto">
-        {filteredChats
-          .map((chat, index) => (
-            <ChatItem
-              key={index}
-              chat={chat}
-              setLikedList={setLikedList}
-              onGroupClick={onGroupClick}
-              selectedGroup={selectedGroup}
-              isPrivate={isPrivate}
-            />
-          ))
-          .sort(customSort)}
-      </div>
-    </div>
+    </form>
+  </div>
+  <div className="h-[80%] overflow-y-auto">
+    {mockChatList
+      .map((chat, index) => (
+        <ChatItem
+          key={index}
+          chat={chat}
+          setLikedList={setLikedList}
+          onGroupClick={onGroupClick}
+          selectedGroup={selectedGroup}
+          isPrivate={isPrivate}
+        />
+      ))
+      .sort(customSort)}
+  </div>
+</div>
   );
 };
 export default Chats;

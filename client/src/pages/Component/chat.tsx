@@ -22,7 +22,7 @@ const ChatItem: React.FC<GroupItemProps> = ({
   isPrivate,
   selectedGroup,
 }) => {
-  const [isHeartActive, setIsHeartActive] = useState(chat.pin);
+  const [isFavourite, setIsFavourite] = useState(chat.pin);
   const router = useRouter();
   const { username } = router.query;
 
@@ -30,68 +30,68 @@ const ChatItem: React.FC<GroupItemProps> = ({
     socket.emit("pin-chat", {
       username: username,
       room: chat.roomName,
-      pinStatus: !isHeartActive,
+      pinStatus: !isFavourite,
     });
-    if (isHeartActive) {
-      setIsHeartActive(false);
+    if (isFavourite) {
+      setIsFavourite(false);
       setLikedList((prev) => prev.filter((item) => item !== chat.name));
     } else {
-      setIsHeartActive(true);
+      setIsFavourite(true);
       setLikedList((prev) => [...prev, chat.name]);
     }
   };
 
   return (
     <div
-      className={`h-28 w-full items-center flex cursor-pointer border-b border-borderColor ${
-        selectedGroup == (chat.isPrivate ? chat.name : chat.roomName) &&
-        isPrivate == chat.isPrivate
-          ? "bg-purple bg-opacity-40"
-          : "hover:bg-purple hover:bg-opacity-5"
-      } transition duration-250`}
-    >
-      <div
-        className={`h-28 w-full items-center flex `}
-        onClick={() => {
-          const name = chat.isPrivate ? chat.name : chat.roomName;
-          onGroupClick(name, chat.isPrivate);
-        }}
+  className={`h-28 w-full items-center flex cursor-pointer border-b border-gray-200 ${
+    selectedGroup == (chat.isPrivate ? chat.name : chat.roomName) &&
+    isPrivate == chat.isPrivate
+      ? "bg-yellow-500 bg-opacity-40"
+      : "hover:bg-yellow-500 hover:bg-opacity-5"
+  } transition duration-250`}
+>
+  <div
+    className={`h-28 w-full items-center flex `}
+    onClick={() => {
+      const name = chat.isPrivate ? chat.name : chat.roomName;
+      onGroupClick(name, chat.isPrivate);
+    }}
+  >
+    <Image
+      src={`/${chat.name.includes("(") ? "G" : "Frame_"}${
+        chat.name ? hashString(chat.name.split(" (")[0] as string) % 9 : 0
+      }.png`}
+      alt=""
+      width={75}
+      height={50}
+      className="ml-6 rounded-full"
+    ></Image>
+    <div className="font-roboto ml-6">
+      <p
+        className={`text-black text-xl mt-2 ${
+          selectedGroup == (chat.isPrivate ? chat.name : chat.roomName)
+            ? "font-bold"
+            : ""
+        }`}
       >
-        <Image
-          src={`/${chat.name.includes("(") ? "G" : "Frame_"}${
-            chat.name ? hashString(chat.name.split(" (")[0] as string) % 9 : 0
-          }.png`}
-          alt=""
-          width={75}
-          height={50}
-          className="ml-6"
-        ></Image>
-        <div className="font-roboto ml-6">
-          <p
-            className={`text-white text-xl mt-2 ${
-              selectedGroup == (chat.isPrivate ? chat.name : chat.roomName)
-                ? "font-bold"
-                : ""
-            }`}
-          >
-            {chat.name}
-          </p>
-        </div>
-      </div>
-      <div className={`ml-auto h-28 items-center flex`}>
-        {isHeartActive ? (
-          <HeartIconSolid
-            className="h-8 w-8 mr-6 text-purple"
-            onClick={handleHeartClick}
-          />
-        ) : (
-          <HeartIcon
-            className="h-8 w-8 mr-6 text-gray-500"
-            onClick={handleHeartClick}
-          />
-        )}
-      </div>
+        {chat.name}
+      </p>
     </div>
+  </div>
+  <div className={`ml-auto h-28 items-center flex`}>
+    {isFavourite ? (
+      <HeartIconSolid
+        className="h-8 w-8 mr-6 text-[#ff0049]"
+        onClick={handleHeartClick}
+      />
+    ) : (
+      <HeartIcon
+        className="h-8 w-8 mr-6 text-gray-500"
+        onClick={handleHeartClick}
+      />
+    )}
+  </div>
+</div>
   );
 };
 

@@ -9,18 +9,18 @@ interface SidebarProps {
   onGroupClick: (groupName: string, isprivate: any) => void; // Update the type of onGroupClick
   selectedGroup: string;
   isPrivate: any;
+  currentPage: string;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
   onGroupClick,
   selectedGroup,
   isPrivate,
+  currentPage,
 }) => {
-  const [currentPage, setPage] = useState("all-chats");
 
   return (
     <>
-      <SidebarMenu setPage={setPage} currentPage={currentPage} />
       {(() => {
         switch (currentPage) {
           case "friends":

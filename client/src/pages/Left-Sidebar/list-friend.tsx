@@ -53,61 +53,63 @@ const Friends: React.FC<ChatFriendsProps> = ({
     };
   }, [username]);
 
+  const mock = ['John', 'Jane', 'Doe', 'Smith', 'Alice', 'Bob'];
+
   return (
-    <div className="bg-bgColor w-1/3 border-r border-borderColor">
-      <div className="h-[20%] w-full border-b border-borderColor items-center flex justify-center">
-        <form
-          className="w-4/5 flex items-center relative"
-          onSubmit={handleSearch}
+    <div className="bg-white w-1/3 border-r border-gray-300">
+  <div className="h-auto w-full border-b border-gray-300 items-center flex justify-center">
+    <form
+      className="w-4/5 flex items-center relative"
+      onSubmit={handleSearch}
+    >
+      <input
+        type="text"
+        className="w-full h-12 border rounded-full bg-white pl-5 text-black pr-10"
+        placeholder="Search"
+        name="search_user"
+      />
+      <div className="absolute right-0 top-0 h-full w-10 text-center text-gray-400 pointer-events-none flex items-center justify-center">
+        <MagnifyingGlassIcon className="h-6 w-6 text-black" />
+      </div>
+    </form>
+  </div>
+  <div className="h-[80%] overflow-y-auto">
+    {mock.map((friend, index) => {
+      return (
+        <div
+          className={`h-28 w-full border-b border-gray-300 items-center flex cursor-pointer ${
+            friend == selectedFriend && isPrivate
+              ? "bg-white bg-opacity-40"
+              : "hover:bg-white hover:bg-opacity-5"
+          } transition duration-250`}
+          key={index}
+          onClick={() => {
+            onGroupClick(friend, true);
+          }}
         >
-          <input
-            type="text"
-            className="w-full h-12 rounded-2xl bg-borderColor pl-5 text-white pr-10"
-            placeholder="Search"
-            name="search_user"
-          />
-          <div className="absolute right-0 top-0 h-full w-10 text-center text-gray-400 pointer-events-none flex items-center justify-center">
-            <MagnifyingGlassIcon className="h-6 w-6 text-fontBgColor" />
-          </div>
-        </form>
-      </div>
-      <div className="h-[80%] overflow-y-auto">
-        {filteredFriends.map((friend, index) => {
-          return (
-            <div
-              className={`h-28 w-full border-b border-borderColor items-center flex cursor-pointer ${
-                friend == selectedFriend && isPrivate
-                  ? "bg-purple bg-opacity-40"
-                  : "hover:bg-purple hover:bg-opacity-5"
-              } transition duration-250`}
-              key={index}
-              onClick={() => {
-                onGroupClick(friend, true);
-              }}
+          <Image
+            src={`/Frame_${
+              friend ? hashString(friend as string) % 9 : 0
+            }.png`}
+            alt=""
+            width={75}
+            height={50}
+            className="ml-6"
+          ></Image>
+          <div className="font-roboto ml-6">
+            <p
+              className={`text-black text-xl ${
+                friend === selectedFriend && isPrivate ? "font-bold" : ""
+              }`}
             >
-              <Image
-                src={`/Frame_${
-                  friend ? hashString(friend as string) % 9 : 0
-                }.png`}
-                alt=""
-                width={75}
-                height={50}
-                className="ml-6"
-              ></Image>
-              <div className="font-roboto ml-6">
-                <p
-                  className={`text-white text-xl ${
-                    friend === selectedFriend && isPrivate ? "font-bold" : ""
-                  }`}
-                >
-                  {friend}
-                </p>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </div>
+              {friend}
+            </p>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</div>
   );
 };
 export default Friends;

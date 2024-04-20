@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        roboto: ['"Roboto"', "sans-serif"],
+        lexend: ['Lexend', 'sans-serif'],
         "lexend-deca": ['"Lexend Deca"', "sans-serif"],
       },
       colors: {

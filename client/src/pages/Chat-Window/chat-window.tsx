@@ -340,11 +340,11 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
   };
 
   return (
-    <div className="h-full w-2/3 flex flex-col" onClick={hideContextMenu}>
-      <div className="h-20 w-full bg-bgColor border-b border-borderColor flex-shrink-0">
+    <div className="h-full flex flex-col w-full bg-yellow-300" onClick={hideContextMenu}>
+      <div className="h-20 w-full bg-white border-b border-gray-300 flex-shrink-0">
         <div className="container mx-auto flex justify-center items-center h-full">
           <div>
-            <p className="text-3xl font-roboto text-white font-medium">
+            <p className="text-3xl font-roboto text-black font-medium">
               {selectedGroup}
             </p>
           </div>
@@ -352,60 +352,9 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
       </div>
 
       <div
-        className="bg-bgColor h-full w-full flex-grow overflow-y-auto"
+        className="bg-white h-full w-full flex-grow overflow-y-auto"
         ref={messagesEndRef}
       >
-        {!hideAnnouncements && (
-          <>
-            {announcements[0] != null && (
-              <div className="bg-darkBgColor text-fontWhiteDarkBgColor w-[100%] sticky top-0 z-10">
-                <div className="py-2 px-4 flex items-center justify-between border-b border-borderColor">
-                  <div className="flex items-center">
-                    <MegaphoneIcon className="h-6 w-6 text-white-500" />
-                    <p className="ml-2">{announcements[0]}</p>
-                  </div>
-                  <button
-                    className="focus:outline-none"
-                    onClick={toggleAnnouncements}
-                  >
-                    <ChevronDownIcon className="h-4 w-4 text-fontWhiteDarkBgColor" />
-                  </button>
-                </div>
-                {!hideAnnouncements && showAnnouncements && (
-                  <div className="absolute mt-2 top-[80%] right-0 w-[100%] z-10 border-fontWhiteDarkBgColor">
-                    {announcements.slice(1).map((announce, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center bg-fontBgColor bg-opacity-20 text-fontWhiteDarkBgColor py-2 px-4 border-b border-fontWhiteDarkBgColor"
-                      >
-                        <MegaphoneIcon className="h-6 w-6 text-white-500" />
-                        <p className="text-sm ml-2">{announce}</p>
-                      </div>
-                    ))}
-                    {showHideButton && (
-                      <button
-                        className="bg-darkBgColor bg-opacity-80 text-fontWhiteDarkBgColor py-2 px-4 w-full text-left focus:outline-none"
-                        onClick={() => {
-                          const roomName = isPrivate
-                            ? formatRoomName(selectedGroup, username as string)
-                            : room;
-                          socket.emit("remove-announce", {
-                            room: roomName,
-                          });
-                          handleHideAnnouncements();
-                        }}
-                      >
-                        <p className="text-sm hover:text-purple transition duration-250">
-                          Do not show again!
-                        </p>
-                      </button>
-                    )}
-                  </div>
-                )}
-              </div>
-            )}
-          </>
-        )}
         <div className="px-8 pt-8">
           <div>
             {(messages[selectedGroup] || []).map((m, index) => {
@@ -413,14 +362,12 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
               return (
                 <div
                   key={index}
-                  className={`flex items-start mb-2 ${
-                    isCurrentUser ? "flex-row-reverse" : "flex-row -ml-4"
-                  }`}
+                  className={`flex items-start mb-2 ${isCurrentUser ? "flex-row-reverse" : "flex-row -ml-4"
+                    }`}
                 >
                   <Image
-                    src={`/Frame_${
-                      m.author ? hashString(m.author as string) % 9 : 0
-                    }.png`}
+                    src={`/Frame_${m.author ? hashString(m.author as string) % 9 : 0
+                      }.png`}
                     alt=""
                     width={40}
                     height={40}
@@ -428,38 +375,36 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
                   />
                   <div className={"ml-2"}>
                     <p
-                      className={`font-semibold ${
-                        isCurrentUser
-                          ? "text-right text-fontWhiteDarkBgColor"
+                      className={`font-semibold ${isCurrentUser
+                          ? "text-right text-black"
                           : "text-gray-800"
-                      }`}
+                        }`}
                     >
                       {isCurrentUser ? (
                         <>
-                          <span className="text-fontBgColor text-sm ml-2">
+                          <span className="text-gray-500 text-sm ml-2">
                             {formatTime(m.time)}
                           </span>
-                          <span className="text-fontWhiteDarkBgColor text-sm ml-2">
+                          <span className="text-black text-sm ml-2">
                             {m.author}
                           </span>
                         </>
                       ) : (
                         <>
-                          <span className="text-fontWhiteDarkBgColor text-sm">
+                          <span className="text-black text-sm">
                             {m.author}
                           </span>
-                          <span className="text-fontBgColor text-sm ml-2">
+                          <span className="text-gray-500 text-sm ml-2">
                             {formatTime(m.time)}
                           </span>
                         </>
                       )}
                     </p>
                     <div
-                      className={`px-2 py-1 w-fit h-fit ${
-                        isCurrentUser
-                          ? "ml-auto bg-purple text-fontWhiteDarkBgColor rounded-lg rounded-tr-none rounded-br-lg"
-                          : "bg-borderColor text-fontWhiteDarkBgColor rounded-lg rounded-bl-lg rounded-tl-none"
-                      }`}
+                      className={`px-2 py-1 w-fit h-fit ${isCurrentUser
+                          ? "ml-auto bg-white text-black rounded-lg rounded-tr-none rounded-br-lg"
+                          : "bg-gray-200 text-black rounded-lg rounded-bl-lg rounded-tl-none"
+                        }`}
                       onContextMenu={(e) => handleContextMenu(e, index)}
                     >
                       <div className="break-words max-w-[20ch]">
@@ -470,53 +415,23 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
                 </div>
               );
             })}
-            {contextMenu.visible && (
-              <div
-                className="fixed text-fontWhiteDarkBgColor p-2 bg-darkBgColor bg-opacity-70 rounded-2xl"
-                style={{ top: contextMenu.y, left: contextMenu.x }}
-              >
-                {contextMenu.isCurrentUser && (
-                  <button
-                    onClick={handleUnsendMessage}
-                    className="cursor-pointer text-sm p-1 block w-full text-left hover:text-purple transition duration-250"
-                  >
-                    unsend
-                  </button>
-                )}
-                <button
-                  onClick={() => {
-                    if (selectedMessageIndex !== null) {
-                      const announceMessage =
-                        messages[selectedGroup][selectedMessageIndex];
-                      socket.emit("announce-message", announceMessage);
-                      handleAnnounce();
-                    }
-                  }}
-                  className={`cursor-pointer text-sm p-1 block w-full text-left ${
-                    contextMenu.isCurrentUser ? "mt-1" : ""
-                  } hover:text-purple transition duration-250`}
-                >
-                  announce
-                </button>
-              </div>
-            )}
           </div>
         </div>
       </div>
-      <div className="bg-bgColor h-20 w-full p-5 flex-shrink-0 flex items-center">
+      <div className="bg-white h-20 w-full p-5 flex-shrink-0 flex items-center">
         <form
           onSubmit={handleSendMessage}
           className="relative w-full flex-grow mr-4"
         >
           <input
-            className="p-2 w-full rounded-xl bg-borderColor text-fontWhiteDarkBgColor hover:border-indigo-600 h-14"
+            className="p-2 w-full rounded-xl bg-gray-200 text-black hover:border-indigo-600 h-14"
             type="text"
             placeholder="Message..."
             value={message}
             onChange={(e) => setmessage(e.target.value)}
           />
           <button
-            className="p-2 rounded-xl bg-purple text-white hover:bg-purple-500 flex items-center absolute right-2 top-2 h-10"
+            className="p-2 rounded-xl bg-[#00a9ff] text-white hover:bg-purple-500 flex items-center absolute right-2 top-2 h-10"
             type="submit"
           >
             <span>Send</span>

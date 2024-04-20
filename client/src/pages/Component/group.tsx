@@ -20,20 +20,18 @@ const GroupItem: React.FC<GroupItemProps> = ({
 }) => {
   return (
     <div
-      className={`h-28 w-full cursor-pointer  border-b border-borderColor items-center flex ${
-        group.groupName === selectedGroup && !isPrivate
+      className={`h-28 w-full cursor-pointer border-b border-borderColor items-center flex p-4 rounded-lg ${group.groupName === selectedGroup && !isPrivate
           ? "bg-purple bg-opacity-40"
-          : "hover:bg-purple hover:bg-opacity-5"
-      } transition duration-200`}
+          : "hover:bg-gray-200"
+        } transition duration-200`}
       onClick={() => {
         onGroupClick(group.groupName, false);
         console.log(group.groupName);
       }}
     >
       <Image
-        src={`/G${
-          group.groupName ? hashString(group.groupName as string) % 9 : 0
-        }.png`}
+        src={`/G${group.groupName ? hashString(group.groupName as string) % 9 : 0
+          }.png`}
         alt=""
         width={75}
         height={50}
@@ -41,9 +39,8 @@ const GroupItem: React.FC<GroupItemProps> = ({
       ></Image>
       <div className="font-roboto ml-6">
         <p
-          className={`text-white text-xl ${
-            group.groupName === selectedGroup && !isPrivate ? "font-bold" : ""
-          }`}
+          className={`text-black text-xl ${group.groupName === selectedGroup && !isPrivate ? "font-bold" : ""
+            }`}
         >
           {`${group.groupName} (${group.people})`}
         </p>

@@ -36,26 +36,27 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-1 flex-col items-center bg-[#F6F5F2] w-screen h-screen justify-center">
-      <div className="border border-[#F3D0D7] bg-gradient-to-r from-[#F6F5F2] to-[#F3D0D7] rounded-xl flex flex-col justify-center items-center px-12 py-16">
-        <Image src="/barby-logo.png" alt="" width={200} height={100}></Image>
+    <div className="flex flex-1 flex-col items-center bg-blue-gray-100 w-screen h-screen justify-center">
+      <div className="border border-blue-gray-200 bg-gradient-to-r from-blue-gray-100 to-blue-gray-200 rounded-xl flex flex-col justify-center items-center px-12 py-16">
+        <Image src="/logo.png" alt="" width={200} height={100}></Image>
+        <h1 className="mt-5 font-bold text-4xl text-[#4a5568]">Running Sadly</h1>
         <form
           className="w-max mt-10 flex flex-col justify-center items-center space-y-12"
           onSubmit={handleLogin}
         >
           <input
             type="text"
-            className="focus:outline-none w-80 h-16 rounded-2xl bg-[#F6F5F2] pl-5 text-gray-900 border-2 border-[#F3D0D7]"
+            className="focus:outline-none w-80 h-16 rounded-2xl bg-blue-gray-50 pl-5 text-blue-gray-800 border-2 border-blue-gray-200 text-xl"
             placeholder="Username"
             name="username"
             onChange={(e) => setUsername(e.target.value)}
           />
           <button
             type="submit"
-            className="w-18 text-lg text-bold flex items-center justify-center h-12 w-60 bg-[#E240A2] rounded-full ml-5 text-[white]"
+            className="w-18 text-lg font-bold flex items-center justify-center h-12 w-60 bg-[#3182ce] rounded-full ml-5 text-white"
             name="Go"
           >
-            Try it out !
+            Let's Chat !
           </button>
         </form>
         {warning && <p className="mt-3 text-red-500">{warning}</p>}

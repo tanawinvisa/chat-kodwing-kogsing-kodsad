@@ -89,55 +89,63 @@ const Groups: React.FC<ChatGroupsProps> = ({
     group.groupName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  return (
-    <div className="bg-bgColor w-1/3 border-r border-borderColor">
-      <div className="h-[20%] w-full border-b border-borderColor items-center flex justify-center flex-col">
-        <form
-          className="w-4/5 flex items-center relative"
-          onSubmit={handleSearch}
-        >
-          <input
-            type="text"
-            className="w-full h-12 rounded-2xl bg-borderColor pl-5 text-white pr-10"
-            placeholder="Search"
-            name="search_user"
-          />
-          <div className="absolute right-0 top-0 h-full w-10 text-center text-gray-400 pointer-events-none flex items-center justify-center">
-            <MagnifyingGlassIcon className="h-6 w-6 text-fontBgColor" />
-          </div>
-        </form>
+  const mock = [
+    { groupName: 'Group 1', people: 5 },
+    { groupName: 'Group 2', people: 3 },
+    { groupName: 'Group 3', people: 4 },
+    { groupName: 'Group 4', people: 2 },
+    { groupName: 'Group 5', people: 6 },
+  ];
 
-        <form
-          className="w-11/12 items-center flex justify-center mt-3"
-          onSubmit={handleCreateGroup}
-        >
-          <input
-            type="text"
-            className="w-full h-12 rounded-2xl bg-borderColor pl-5 text-white"
-            placeholder="Enter Group Name"
-            name="group_name"
-          />
-          <button
-            type="submit"
-            name="all-chats"
-            className="w-20 h-12 rounded-3xl text-white ml-2 bg-purple hover:bg-opacity-60 transition duration-300"
-          >
-            Create
-          </button>
-        </form>
+  return (
+    <div className="bg-white w-1/3 border-r border-gray-300 p-4">
+  <div className="h-auto w-full border-b border-gray-300 items-center flex justify-center flex-col">
+    <form
+      className="w-4/5 flex items-center relative"
+      onSubmit={handleSearch}
+    >
+      <input
+        type="text"
+        className="w-full h-12 rounded-2xl bg-gray-200 pl-5 text-black pr-10"
+        placeholder="Search"
+        name="search_user"
+      />
+      <div className="absolute right-0 top-0 h-full w-10 text-center text-gray-400 pointer-events-none flex items-center justify-center">
+        <MagnifyingGlassIcon className="h-6 w-6 text-gray-500" />
       </div>
-      <div className="h-[80%] overflow-y-auto">
-        {filteredGroups.map((group, index) => (
-          <GroupItem
-            onGroupClick={onGroupClick}
-            key={index}
-            group={group}
-            selectedGroup={selectedGroup}
-            isPrivate={isPrivate}
-          />
-        ))}
-      </div>
-    </div>
+    </form>
+
+    <form
+      className="w-11/12 items-center flex justify-center mt-3"
+      onSubmit={handleCreateGroup}
+    >
+      <input
+        type="text"
+        className="w-full h-12 rounded-2xl bg-gray-200 pl-5 text-black"
+        placeholder="Enter Group Name"
+        name="group_name"
+      />
+      <button
+        type="submit"
+        name="all-chats"
+        className="w-20 h-12 rounded-3xl text-white ml-2 bg-[#00a9ff] hover:bg-purple-600 transition duration-300"
+      >
+        Create
+      </button>
+    </form>
+  </div>
+  <div className="h-[80%] overflow-y-auto">
+    {mock.map((group, index) => (
+      <GroupItem
+        onGroupClick={onGroupClick}
+        key={index}
+        group={group}
+        selectedGroup={selectedGroup}
+        isPrivate={isPrivate}
+      />
+    ))}
+  </div>
+</div>
   );
 };
 

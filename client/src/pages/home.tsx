@@ -5,8 +5,12 @@ import ChatWindow from "./Chat-Window/chat-window";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 import hashString from "@/utils/hashString";
+import Menu from "./Left-Sidebar/sidebar-menu";
+
 
 const Home: React.FC = () => {
+  const [currentPage, setPage] = useState("all-chats");
+
   const router = useRouter();
   const { username } = router.query;
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -50,31 +54,35 @@ const Home: React.FC = () => {
 
   return (
     <div className="h-screen flex-col flex">
+      <Menu setPage={setPage} currentPage={currentPage} />
       {/* <div className="bg-gradient-to-r from-[#F6F5F2] to-[#F3D0D7] text-gray-800 w-full h-[12.5%] items-center flex"></div> */}
-      <div className="h-[100%] flex-1 flex-row flex">
+      <div className="flex h-full w-screen">
         <Sidebar
           onGroupClick={handleGroupClick}
           selectedGroup={selectedGroup}
           isPrivate={isPrivate}
+          currentPage={currentPage}
         />
-        {showChatWindow ? (
-          <ChatWindow selectedGroup={selectedGroup} isPrivate={isPrivate} />
-        ) : (
-          <div className="bg-bgColor w-2/3">
-            <div className="w-full h-full justify-center items-center flex-col flex">
-              <Image
-                src="/logo1.png"
-                alt=""
-                width={200}
-                height={200}
-                className="opacity-50"
-              ></Image>
-              <p className="text-xl font-roboto text-white opacity-40 mt-2">
-                Start your new chat!
-              </p>
+        <div className="flex w-2/3">
+          {showChatWindow ? (
+            <ChatWindow selectedGroup={selectedGroup} isPrivate={isPrivate} />
+          ) : (
+            <div className="bg-white w-full h-full flex items-center justify-center">
+              <div className="flex flex-col items-center justify-center">
+                <Image
+                  src="/logo.png"
+                  alt=""
+                  width={200}
+                  height={200}
+                  className="opacity-50"
+                />
+                <p className="text-xl font-roboto text-black mt-2">
+                  Too Sad To Chat ?
+                </p>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

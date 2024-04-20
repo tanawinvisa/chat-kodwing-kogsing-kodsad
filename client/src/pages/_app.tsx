@@ -6,8 +6,8 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>INCOGNITOTALK</title>
-        <link rel="icon" href="/logo1.png" />
+        <title>KWKSKS</title>
+        <link rel="icon" href="/logo.png" />
       </Head>
       <Component {...pageProps} />
     </>
