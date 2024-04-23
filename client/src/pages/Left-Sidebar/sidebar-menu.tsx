@@ -7,11 +7,13 @@ import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import hashString from "@/utils/hashString";
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import ThemeButton from "../theme_button";
+import ReviewModal from "../Component/ReviewModal";
 
 const SidebarMenu = ({ setPage, currentPage }: SidebarMenuProps) => {
   const [room, setRoom] = useState("all-chats");
+  const [profileURL, setProfileURL] = useState("");
 
   const router = useRouter();
   const { username } = router.query;
@@ -47,22 +49,122 @@ const SidebarMenu = ({ setPage, currentPage }: SidebarMenuProps) => {
     };
   }, [dropdownRef]);
 
+  const [isWriteReviewModal, setIsWriteReviewModal] = useState(false);
+
+  const closeWriteReviewModal = () => {
+    setIsWriteReviewModal(false);
+  };
+  const openWriteReviewModal = () => {
+    setIsWriteReviewModal(true);
+  };
+
+  const handleSetProfileURL = (newURL: string) => {
+    setProfileURL(newURL);
+    closeWriteReviewModal();
+  };
+
   return (
     <div className="w-full bg-[#FFFC00] dark:bg-gray-900 flex text-black justify-between items-center font-sans px-4 py-2">
+      <ReviewModal
+        isOpen={isWriteReviewModal}
+        closeModal={closeWriteReviewModal}
+        title="Select your profile !"
+      >
+        <div className="flex flex-col justify-center items-center p-8 space-y-8">
+          <div className="flex flex-row justify-center items-center space-x-2">
+            <Image
+              src={`/Frame_0.png`}
+              alt=""
+              width={125}
+              height={125}
+              className={" hover:bg-gray-100 rounded-3xl p-4 "}
+              onClick={() => handleSetProfileURL("/Frame_0.png")}
+            />
+            <Image
+              src={`/Frame_1.png`}
+              alt=""
+              width={125}
+              height={125}
+              className={" hover:bg-gray-100 rounded-3xl p-4 "}
+              onClick={() => handleSetProfileURL("/Frame_1.png")}
+            />
+            <Image
+              src={`/Frame_2.png`}
+              alt=""
+              width={125}
+              height={125}
+              className={" hover:bg-gray-100 rounded-3xl p-4 "}
+              onClick={() => handleSetProfileURL("/Frame_2.png")}
+            />
+          </div>
+          <div className="flex flex-row justify-center items-center space-x-2">
+            <Image
+              src={`/Frame_3.png`}
+              alt=""
+              width={125}
+              height={125}
+              className={" hover:bg-gray-100 rounded-3xl p-4 "}
+              onClick={() => handleSetProfileURL("/Frame_3.png")}
+            />
+            <Image
+              src={`/Frame_4.png`}
+              alt=""
+              width={125}
+              height={125}
+              className={" hover:bg-gray-100 rounded-3xl p-4 "}
+              onClick={() => handleSetProfileURL("/Frame_4.png")}
+            />
+            <Image
+              src={`/Frame_5.png`}
+              alt=""
+              width={125}
+              height={125}
+              className={" hover:bg-gray-100 rounded-3xl p-4 "}
+              onClick={() => handleSetProfileURL("/Frame_5.png")}
+            />
+          </div>
+          <div className="flex flex-row justify-center items-center space-x-2">
+            <Image
+              src={`/Frame_6.png`}
+              alt=""
+              width={125}
+              height={125}
+              className={" hover:bg-gray-100 rounded-3xl p-4 "}
+              onClick={() => handleSetProfileURL("/Frame_6.png")}
+            />
+            <Image
+              src={`/Frame_7.png`}
+              alt=""
+              width={125}
+              height={125}
+              className={" hover:bg-gray-100 rounded-3xl p-4 "}
+              onClick={() => handleSetProfileURL("/Frame_7.png")}
+            />
+            <Image
+              src={`/Frame_8.png`}
+              alt=""
+              width={125}
+              height={125}
+              className={" hover:bg-gray-100 rounded-3xl p-4 "}
+              onClick={() => handleSetProfileURL("/Frame_8.png")}
+            />
+          </div>
+        </div>
+      </ReviewModal>
       <div className="flex flex-row items-center space-x-6 w-1/3">
         <Image
-        src="/logo.png"
-        alt=""
-        width={50}
-        height={50}
-        className="ml-4 rounded-full"
-      ></Image>
+          src="/logo.png"
+          alt=""
+          width={50}
+          height={50}
+          className="ml-4 rounded-full"
+        ></Image>
         <div>
-          <ThemeButton/>
+          <ThemeButton />
         </div>
       </div>
 
-    <div className="flex items-center w-1/3 justify-center">
+      <div className="flex items-center w-1/3 justify-center">
         <button
           ref={accountButtonRef}
           type="button"
@@ -71,71 +173,76 @@ const SidebarMenu = ({ setPage, currentPage }: SidebarMenuProps) => {
           onClick={toggleDropdown}
         >
           <Image
-            src={`/Frame_${
-              username ? hashString(username as string) % 9 : 0
-            }.png`}
+            src={profileURL || "/Frame_0.png"}
             alt=""
-            width={32}
-            height={32}
+            width={50}
+            height={50}
             className="rounded-full"
+            onClick={openWriteReviewModal}
           ></Image>
         </button>
-    </div>
-    
-    <div className="flex w-1/3 justify-end">
-      <button
-        type="button"
-        name="friends"
-        className={`flex items-center justify-center w-14 h-14 rounded-full ${
-          room === "friends" ? "text-yellow-700 bg-white" : "hover:text-yellow-500 dark:hover:scale-110 dark:text-white"
-        } transition duration-250`}
-        onClick={() => {
-          setPage("friends");
-          setRoom("friends");
-          console.log("friends");
-        }}
-      >
-        <UserIcon className="h-6 w-6" />
-      </button>
-      <button
-        type="button"
-        name="groups"
-        className={`flex items-center justify-center w-14 h-14 rounded-full ${
-          room === "groups" ? "text-yellow-700 bg-white " : "hover:text-yellow-500 dark:hover:scale-110 dark:text-white"
-        } transition duration-250`}
-        onClick={() => {
-          setPage("groups");
-          setRoom("groups");
-          console.log("groups");
-        }}
-      >
-        <UserGroupIcon className="h-6 w-6 "/>
-      </button>
-      <button
-        type="button"
-        name="all-chats"
-        className={`flex items-center justify-center w-14 h-14 rounded-full  ${
-          room === "all-chats" ? "text-yellow-700 bg-white" : "hover:text-yellow-500 dark:hover:scale-110 dark:text-white"
-        } transition duration-250`}
-        onClick={() => {
-          setPage("all-chats");
-          setRoom("all-chats");
-          console.log("all-chats");
-        }}
-      >
-        <ChatBubbleOvalLeftEllipsisIcon className="h-6 w-6" />
-      </button>
+      </div>
 
-      <button
-        type="button"
-        name="all-chats"
-        className={`flex items-center justify-center w-14 h-14 rounded-full dark:hover:scale-110 hover:text-yellow-500 dark:text-white transition duration-250`}
-        onClick={handleLogout}
-      >
-        <ExitToAppIcon className="h-8 w-8" />
-      </button>
+      <div className="flex w-1/3 justify-end">
+        <button
+          type="button"
+          name="friends"
+          className={`flex items-center justify-center w-14 h-14 rounded-full ${
+            room === "friends"
+              ? "text-yellow-700 bg-white"
+              : "hover:text-yellow-500 dark:hover:scale-110 dark:text-white"
+          } transition duration-250`}
+          onClick={() => {
+            setPage("friends");
+            setRoom("friends");
+            console.log("friends");
+          }}
+        >
+          <UserIcon className="h-6 w-6" />
+        </button>
+        <button
+          type="button"
+          name="groups"
+          className={`flex items-center justify-center w-14 h-14 rounded-full ${
+            room === "groups"
+              ? "text-yellow-700 bg-white "
+              : "hover:text-yellow-500 dark:hover:scale-110 dark:text-white"
+          } transition duration-250`}
+          onClick={() => {
+            setPage("groups");
+            setRoom("groups");
+            console.log("groups");
+          }}
+        >
+          <UserGroupIcon className="h-6 w-6 " />
+        </button>
+        <button
+          type="button"
+          name="all-chats"
+          className={`flex items-center justify-center w-14 h-14 rounded-full  ${
+            room === "all-chats"
+              ? "text-yellow-700 bg-white"
+              : "hover:text-yellow-500 dark:hover:scale-110 dark:text-white"
+          } transition duration-250`}
+          onClick={() => {
+            setPage("all-chats");
+            setRoom("all-chats");
+            console.log("all-chats");
+          }}
+        >
+          <ChatBubbleOvalLeftEllipsisIcon className="h-6 w-6" />
+        </button>
+
+        <button
+          type="button"
+          name="all-chats"
+          className={`flex items-center justify-center w-14 h-14 rounded-full dark:hover:scale-110 hover:text-yellow-500 dark:text-white transition duration-250`}
+          onClick={handleLogout}
+        >
+          <ExitToAppIcon className="h-8 w-8" />
+        </button>
+      </div>
     </div>
-  </div>
   );
 };
 
