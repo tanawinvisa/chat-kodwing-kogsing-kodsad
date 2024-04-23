@@ -355,6 +355,58 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
         className="bg-white h-full w-full flex-grow dark:bg-slate-700 overflow-y-auto"
         ref={messagesEndRef}
       >
+        {!hideAnnouncements && (
+          <>
+            {announcements[0] != null && (
+              <div className="bg-gradient-to-r from-[#F6F5F2] to-[#F3D0D7] dark:from-[#F3D0D7] dark:to-[#cd8896] text-fontWhiteDarkBgColor w-[100%] sticky top-0 z-10">
+                <div className="py-2 px-4 flex items-center justify-between border-b border-borderColor">
+                  <div className="flex items-center text-black">
+                    <MegaphoneIcon className="h-6 w-6 text-white-500" />
+                    <p className="ml-2">{announcements[0]}</p>
+                  </div>
+                  <button
+                    className="focus:outline-none"
+                    onClick={toggleAnnouncements}
+                  >
+                    <ChevronDownIcon className="h-4 w-4 text-fontWhiteDarkBgColor" />
+                  </button>
+                </div>
+                {!hideAnnouncements && showAnnouncements && (
+                  <div className="absolute mt-2 top-[80%] right-0 w-[100%] z-10 border-fontWhiteDarkBgColor">
+                    {announcements.slice(1).map((announce, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center bg-fontBgColor bg-opacity-20 text-black py-2 px-4 border-b border-fontWhiteDarkBgColor"
+                      >
+                        <MegaphoneIcon className="h-6 w-6 text-white-500" />
+                        <p className="text-sm ml-2">{announce}</p>
+                      </div>
+                    ))}
+                    {showHideButton && (
+                      <button
+                        className="bg-darkBgColor bg-opacity-80 text-fontWhiteDarkBgColor py-2 px-4 w-full text-left focus:outline-none"
+                        onClick={() => {
+                          const roomName = isPrivate
+                            ? formatRoomName(selectedGroup, username as string)
+                            : room;
+                          socket.emit("remove-announce", {
+                            room: roomName,
+                          });
+                          handleHideAnnouncements();
+                        }}
+                      >
+                        <p className="text-sm hover:text-purple transition duration-250">
+                          Do not show again!
+                        </p>
+                      </button>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+          </>
+        )}
+
         <div className="px-8 pt-8">
           <div>
             {(messages[selectedGroup] || []).map((m, index) => {
@@ -415,6 +467,36 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
                 </div>
               );
             })}
+            {contextMenu.visible && (
+              <div
+                className="fixed text-fontWhiteDarkBgColor p-2 bg-darkBgColor bg-opacity-70 rounded-2xl"
+                style={{ top: contextMenu.y, left: contextMenu.x }}
+              >
+                {contextMenu.isCurrentUser && (
+                  <button
+                    onClick={handleUnsendMessage}
+                    className="cursor-pointer text-sm p-1 block w-full text-left transition duration-250"
+                  >
+                    unsend
+                  </button>
+                )}
+                <button
+                  onClick={() => {
+                    if (selectedMessageIndex !== null) {
+                      const announceMessage =
+                        messages[selectedGroup][selectedMessageIndex];
+                      socket.emit("announce-message", announceMessage);
+                      handleAnnounce();
+                    }
+                  }}
+                  className={`cursor-pointer text-sm p-1 block w-full text-left ${
+                    contextMenu.isCurrentUser ? "mt-1" : ""
+                  } transition duration-250`}
+                >
+                  announce
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
