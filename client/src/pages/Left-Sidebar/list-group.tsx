@@ -98,8 +98,8 @@ const Groups: React.FC<ChatGroupsProps> = ({
   ];
 
   return (
-    <div className="bg-white w-1/3 border-r border-gray-300 p-4">
-  <div className="h-auto w-full border-b border-gray-300 items-center flex justify-center flex-col">
+    <div className="bg-white w-1/3 border-r border-gray-300 p-4 h-full flex flex-col">
+  <div className="h-[150px] w-full border-b border-gray-300 flex flex-col">
     <form
       className="w-4/5 flex items-center relative"
       onSubmit={handleSearch}
@@ -134,7 +134,8 @@ const Groups: React.FC<ChatGroupsProps> = ({
       </button>
     </form>
   </div>
-  <div className="h-[80%] overflow-y-auto">
+  <div className="w-full overflow-y-auto">
+  <div className="flex flex-col">
     {mock.map((group, index) => (
       <GroupItem
         onGroupClick={onGroupClick}
@@ -145,7 +146,9 @@ const Groups: React.FC<ChatGroupsProps> = ({
       />
     ))}
   </div>
+  </div>
 </div>
+
   );
 };
 

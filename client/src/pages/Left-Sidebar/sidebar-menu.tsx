@@ -47,7 +47,7 @@ const SidebarMenu = ({ setPage, currentPage }: SidebarMenuProps) => {
   }, [dropdownRef]);
 
   return (
-    <div className="w-full bg-[#FFFC00] flex text-black justify-between items-center font-sans p-4">
+    <div className="w-full bg-[#FFFC00] flex text-black justify-between items-center font-sans p-4 h-[80px]">
   <Image
     src="/logo.png"
     alt=""

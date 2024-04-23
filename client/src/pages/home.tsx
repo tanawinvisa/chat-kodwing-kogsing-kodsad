@@ -7,10 +7,8 @@ import { useRouter } from "next/router";
 import hashString from "@/utils/hashString";
 import Menu from "./Left-Sidebar/sidebar-menu";
 
-
 const Home: React.FC = () => {
   const [currentPage, setPage] = useState("all-chats");
-
   const router = useRouter();
   const { username } = router.query;
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -53,35 +51,36 @@ const Home: React.FC = () => {
   }, [dropdownRef]);
 
   return (
-    <div className="h-screen flex-col flex">
+    <div className="h-screen flex flex-col">
       <Menu setPage={setPage} currentPage={currentPage} />
-      {/* <div className="bg-gradient-to-r from-[#F6F5F2] to-[#F3D0D7] text-gray-800 w-full h-[12.5%] items-center flex"></div> */}
-      <div className="flex h-full w-screen">
-        <Sidebar
-          onGroupClick={handleGroupClick}
-          selectedGroup={selectedGroup}
-          isPrivate={isPrivate}
-          currentPage={currentPage}
-        />
-        <div className="flex w-2/3">
-          {showChatWindow ? (
-            <ChatWindow selectedGroup={selectedGroup} isPrivate={isPrivate} />
-          ) : (
-            <div className="bg-white w-full h-full flex items-center justify-center">
-              <div className="flex flex-col items-center justify-center">
-                <Image
-                  src="/logo.png"
-                  alt=""
-                  width={200}
-                  height={200}
-                  className="opacity-50"
-                />
-                <p className="text-xl font-roboto text-black mt-2">
-                  Too Sad To Chat ?
-                </p>
+      <div className="flex-1 overflow-hidden">
+        <div className="flex h-full w-screen">
+          <Sidebar
+            onGroupClick={handleGroupClick}
+            selectedGroup={selectedGroup}
+            isPrivate={isPrivate}
+            currentPage={currentPage}
+          />
+          <div className="flex w-2/3 overflow-hidden">
+            {showChatWindow ? (
+              <ChatWindow selectedGroup={selectedGroup} isPrivate={isPrivate} />
+            ) : (
+              <div className="bg-white w-full h-full flex items-center justify-center">
+                <div className="flex flex-col items-center justify-center">
+                  <Image
+                    src="/logo.png"
+                    alt=""
+                    width={200}
+                    height={200}
+                    className="opacity-50"
+                  />
+                  <p className="text-xl font-roboto text-black mt-2">
+                    Too Sad To Chat ?
+                  </p>
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </div>
