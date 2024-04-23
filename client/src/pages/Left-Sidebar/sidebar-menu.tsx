@@ -1,3 +1,8 @@
+type SidebarMenuProps = {
+  setPage: (page: string) => void;
+  currentPage: string;
+};
+
 import {
   ChatBubbleOvalLeftEllipsisIcon,
   UserGroupIcon,

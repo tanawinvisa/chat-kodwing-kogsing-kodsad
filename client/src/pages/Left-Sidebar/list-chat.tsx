@@ -96,87 +96,87 @@ const Chats: React.FC<allChatsProps> = ({
     };
   }, [username]);
 
-
   const mockChatList = [
     {
-      id: '1',
-      name: 'Chat 1',
+      id: "1",
+      name: "Chat 1",
       chat: [
         {
-          roomName: 'Room 1',
-          name: 'User1',
-          message: 'Hello',
+          roomName: "Room 1",
+          name: "User1",
+          message: "Hello",
           isPrivate: false,
           pin: false,
         },
       ],
       isPrivate: false,
-      likedList: ['m2'],
+      likedList: ["m2"],
     },
     {
-      id: '2',
-      name: 'Chat 2',
+      id: "2",
+      name: "Chat 2",
       chat: [
         {
-          roomName: 'Room 2',
-          name: 'User2',
-          message: 'How are you?',
+          roomName: "Room 2",
+          name: "User2",
+          message: "How are you?",
           isPrivate: true,
           pin: false,
         },
       ],
       isPrivate: true,
-      likedList: ['m3'],
+      likedList: ["m3"],
     },
     {
-      id: '3',
-      name: 'Chat 3',
+      id: "3",
+      name: "Chat 3",
       chat: [
         {
-          roomName: 'Room 3',
-          name: 'User3',
-          message: 'Good morning',
+          roomName: "Room 3",
+          name: "User3",
+          message: "Good morning",
           isPrivate: false,
           pin: false,
         },
       ],
       isPrivate: false,
-      likedList: ['m1'],
+      likedList: ["m1"],
     },
   ];
 
   return (
     <div className="bg-white w-1/3 dark:bg-gray-800 border-r border-gray-200">
-  <div className="h-20 w-full border-b border-gray-200 items-center flex justify-center py-4">
-    <form
-      className="w-4/5 flex items-center relative"
-      onSubmit={handleSearch}
-    >
-      <input
-        type="text"
-        className="w-full h-12 rounded-2xl bg-white dark:bg-gray-400 dark:placeholder:text-gray-700 border-[2px] pl-5 text-black pr-10 outline-none"
-        placeholder="Search"
-        name="search_user"
-      />
-      <div className="absolute right-0 top-0 h-full w-10 text-center text-gray-400 pointer-events-none flex items-center justify-center">
-        <MagnifyingGlassIcon className="h-6 w-6 text-gray-500 dark:text-black" />
+      <div className="h-20 w-full border-b border-gray-200 items-center flex justify-center py-4">
+        <form
+          className="w-4/5 flex items-center relative"
+          onSubmit={handleSearch}
+        >
+          <input
+            type="text"
+            className="w-full h-12 rounded-2xl bg-white dark:bg-gray-400 dark:placeholder:text-gray-700 border-[2px] pl-5 text-black pr-10 outline-none"
+            placeholder="Search"
+            name="search_user"
+          />
+          <div className="absolute right-0 top-0 h-full w-10 text-center text-gray-400 pointer-events-none flex items-center justify-center">
+            <MagnifyingGlassIcon className="h-6 w-6 text-gray-500 dark:text-black" />
+          </div>
+        </form>
       </div>
-    </form>
-  </div>
-  <div className="h-full overflow-y-auto">
-    {mockChatList
-      .map((chat, index) => (
-        <ChatItem
-          key={index}
-          setLikedList={setLikedList}
-          onGroupClick={onGroupClick}
-          selectedGroup={selectedGroup}
-          isPrivate={isPrivate} 
-          chat={chat}        />
-      ))
-      .sort(customSort)}
-  </div>
-</div>
+      <div className="h-full overflow-y-auto">
+        {mockChatList.map((group) =>
+          group.chat.map((chat, index) => (
+            <ChatItem
+              key={index}
+              chat={chat}
+              setLikedList={setLikedList}
+              onGroupClick={onGroupClick}
+              selectedGroup={selectedGroup}
+              isPrivate={group.isPrivate}
+            />
+          ))
+        )}
+      </div>
+    </div>
   );
 };
 export default Chats;
