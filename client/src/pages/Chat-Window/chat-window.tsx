@@ -358,17 +358,17 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
         {!hideAnnouncements && (
           <>
             {announcements[0] != null && (
-              <div className="bg-gradient-to-r from-[#F6F5F2] to-[#F3D0D7] dark:from-[#F3D0D7] dark:to-[#cd8896] text-fontWhiteDarkBgColor w-[100%] sticky top-0 z-10">
-                <div className="py-2 px-4 flex items-center justify-between border-b border-borderColor">
-                  <div className="flex items-center text-black">
+              <div className="bg-gradient-to-r text-fontWhiteDarkBgColor w-[100%] sticky top-0 z-10 text-[20px] ">
+                <div className="py-2 px-4 flex items-center justify-between border-b border-borderColor dark:border-white">
+                  <div className="flex items-center text-black dark:text-white">
                     <MegaphoneIcon className="h-6 w-6 text-white-500" />
-                    <p className="ml-2">{announcements[0]}</p>
+                    <p className="ml-2 text-[20px]">{announcements[0]}</p>
                   </div>
                   <button
                     className="focus:outline-none"
                     onClick={toggleAnnouncements}
                   >
-                    <ChevronDownIcon className="h-4 w-4 text-fontWhiteDarkBgColor" />
+                    <ChevronDownIcon className="h-4 w-4 text-black dark:text-fontWhiteDarkBgColor" />
                   </button>
                 </div>
                 {!hideAnnouncements && showAnnouncements && (
@@ -376,7 +376,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
                     {announcements.slice(1).map((announce, index) => (
                       <div
                         key={index}
-                        className="flex items-center bg-fontBgColor bg-opacity-20 text-black py-2 px-4 border-b border-fontWhiteDarkBgColor"
+                        className="flex items-center bg-fontBgColor bg-opacity-20 text-black dark:text-white py-2 px-4 border-b border-fontWhiteDarkBgColor"
                       >
                         <MegaphoneIcon className="h-6 w-6 text-white-500" />
                         <p className="text-sm ml-2">{announce}</p>
@@ -395,7 +395,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
                           handleHideAnnouncements();
                         }}
                       >
-                        <p className="text-sm hover:text-purple transition duration-250">
+                        <p className="text-sm transition duration-250">
                           Do not show again!
                         </p>
                       </button>
@@ -414,7 +414,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
               return (
                 <div
                   key={index}
-                  className={`flex items-center mb-2 ${false ? "flex-row-reverse" : "flex-row -ml-4"
+                  className={`flex items-center mb-7 ${false ? "flex-row-reverse" : "flex-row -ml-4"
                     }`}
                 >
                   <Image
@@ -434,19 +434,19 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
                     >
                       {isCurrentUser ? (
                         <>
-                          <span className="px-2 text-[#D73B55] text-sm font-bold">
-                            {m.author}
+                          <span className="px-2 text-[#00a9ff] text-sm font-bold">
+                            Me
                           </span>
-                          <span className="px-2 text-gray-500 text-sm ml-2">
+                          <span className="px-2 text-gray-500 dark:text-white text-sm ml-2">
                             {formatTime(m.time)}
                           </span>
                         </>
                       ) : (
                         <>
-                          <span className="px-2 text-[#00a9ff] text-sm font-bold">
+                          <span className="px-2 text-[#D73B55] text-sm font-bold">
                             {m.author}
                           </span>
-                          <span className="px-2 text-gray-500 text-sm ml-2">
+                          <span className="px-2 text-gray-500 dark:text-white text-sm ml-2">
                             {formatTime(m.time)}
                           </span>
                         </>
