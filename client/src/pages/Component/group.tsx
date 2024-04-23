@@ -39,7 +39,7 @@ const GroupItem: React.FC<GroupItemProps> = ({
       ></Image>
       <div className="font-roboto ml-6">
         <p
-          className={`text-black text-xl ${group.groupName === selectedGroup && !isPrivate ? "font-bold" : ""
+          className={`text-black text-xl dark:text-white${group.groupName === selectedGroup && !isPrivate ? "font-bold" : ""
             }`}
         >
           {`${group.groupName} (${group.people})`}
