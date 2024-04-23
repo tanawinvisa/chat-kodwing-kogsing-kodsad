@@ -95,7 +95,7 @@ const getUserRooms = (username) => {
   const user = users.find((user) => user.username === username);
   if (user) {
     const userRooms = [];
-    if (user.rooms !== []) {
+    if (user.rooms != []) {
       user.rooms.map((userRoom) => {
         const room = rooms.find((r) => r.room === userRoom.name);
         userRooms.push({ room: room, pin: userRoom.pin });

@@ -5,7 +5,7 @@ import { io } from "socket.io-client";
 import ThemeButton from "./theme_button";
 
 const URL = process.env.NEXT_PUBLIC_URL ?? "";
-export const socket = io("http://localhost:5000", {
+export const socket = io("http://localhost:5001", {
   transports: ["websocket"],
 });
 
@@ -64,7 +64,7 @@ const Login = () => {
             dark:text-[#3182ce] dark:bg-slate-100"
             name="Go"
           >
-            Let's Chat !
+            Lets Chat !
           </button>
         </form>
         {warning && <p className="mt-3 text-red-500">{warning}</p>}
