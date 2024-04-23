@@ -43,7 +43,7 @@ const ChatItem: React.FC<GroupItemProps> = ({
 
   return (
     <div
-  className={`h-28 w-full items-center flex cursor-pointer border-b border-gray-200 ${
+  className={`h-28 w-full items-center flex cursor-pointer border-b border-gray-200 dark:border-white text-black dark:text-white${
     selectedGroup == (chat.isPrivate ? chat.name : chat.roomName) &&
     isPrivate == chat.isPrivate
       ? "bg-yellow-500 bg-opacity-40"

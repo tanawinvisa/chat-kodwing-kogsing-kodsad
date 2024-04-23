@@ -98,19 +98,19 @@ const Groups: React.FC<ChatGroupsProps> = ({
   ];
 
   return (
-    <div className="bg-white w-1/3 border-r border-gray-300 p-4 h-full flex flex-col">
-  <div className="h-[150px] w-full border-b border-gray-300 flex flex-col">
+    <div className="bg-white w-1/3 border-r dark:bg-gray-800 border-gray-300 px-4 py-2 h-full flex flex-col">
+  <div className="h-[150px] w-full border-b border-gray-300 dark:border-white flex flex-col">
     <form
       className="w-4/5 flex items-center relative"
       onSubmit={handleSearch}
     >
       <input
         type="text"
-        className="w-full h-12 rounded-2xl bg-gray-200 pl-5 text-black pr-10"
+        className="w-full h-12 rounded-2xl pl-5 text-black pr-10 border-gray-200 border-[2px] outline-none"
         placeholder="Search"
         name="search_user"
       />
-      <div className="absolute right-0 top-0 h-full w-10 text-center text-gray-400 pointer-events-none flex items-center justify-center">
+      <div className="absolute right-0 top-0 h-full w-10 text-center pointer-events-none flex items-center justify-center">
         <MagnifyingGlassIcon className="h-6 w-6 text-gray-500" />
       </div>
     </form>
@@ -121,7 +121,7 @@ const Groups: React.FC<ChatGroupsProps> = ({
     >
       <input
         type="text"
-        className="w-full h-12 rounded-2xl bg-gray-200 pl-5 text-black"
+        className="w-full h-12 rounded-2xl border-gray-200 border-[2px] outline-none pl-5 text-black"
         placeholder="Enter Group Name"
         name="group_name"
       />
