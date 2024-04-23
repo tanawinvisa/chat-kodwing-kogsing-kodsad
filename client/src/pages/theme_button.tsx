@@ -17,12 +17,12 @@ const ThemeButton = () => {
   };
 
   return (
-    <div onClick={toggleTheme} className="cursor-pointer rounded-full flex justify-center items-center w-[30px] h-[30px] border-black border-[2px]">
+    <div onClick={toggleTheme} className="cursor-pointer rounded-full flex justify-center items-center w-[30px] h-[30px] dark:border-white border-black border-[2px]">
         {   
         theme === 'light' ?
           <LightModeIcon className="text-[20px]"/>
         : 
-          <DarkModeIcon className="text-[20px]"/>
+          <DarkModeIcon className="text-[20px] dark:text-white"/>
         }
     </div>
 

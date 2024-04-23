@@ -57,7 +57,7 @@ const Friends: React.FC<ChatFriendsProps> = ({
 
   return (
     <div className="bg-white dark:bg-gray-800 w-1/3 border-r border-gray-300">
-  <div className="h-auto w-full border-b border-gray-300  items-center flex justify-center py-4">
+  <div className="h-auto w-full border-b border-gray-300 items-center flex justify-center py-4">
     <form
       className="w-4/5 flex items-center relative"
       onSubmit={handleSearch}
@@ -69,7 +69,7 @@ const Friends: React.FC<ChatFriendsProps> = ({
         name="search_user"
       />
       <div className="absolute right-0 top-0 h-full w-10 text-center text-gray-400 pointer-events-none flex items-center justify-center">
-        <MagnifyingGlassIcon className="h-6 w-6 text-black" />
+        <MagnifyingGlassIcon className="h-6 w-6 dark:text-black text-gray-500" />
       </div>
     </form>
   </div>

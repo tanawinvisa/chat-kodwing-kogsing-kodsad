@@ -43,7 +43,7 @@ const ChatItem: React.FC<GroupItemProps> = ({
 
   return (
     <div
-  className={`h-28 w-full items-center flex cursor-pointer border-b border-gray-200 dark:border-white text-black dark:text-white${
+  className={`h-28 w-full items-center flex cursor-pointer border-b border-gray-200 dark:border-white text-black ${
     selectedGroup == (chat.isPrivate ? chat.name : chat.roomName) &&
     isPrivate == chat.isPrivate
       ? "bg-yellow-500 bg-opacity-40"
@@ -68,7 +68,7 @@ const ChatItem: React.FC<GroupItemProps> = ({
     ></Image>
     <div className="font-roboto ml-6">
       <p
-        className={`text-black text-xl mt-2 ${
+        className={`text-black dark:text-white text-xl mt-2 ${
           selectedGroup == (chat.isPrivate ? chat.name : chat.roomName)
             ? "font-bold"
             : ""
