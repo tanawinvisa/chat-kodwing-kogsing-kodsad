@@ -340,7 +340,10 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
   };
 
   return (
-    <div className="h-full flex flex-col w-full bg-yellow-300" onClick={hideContextMenu}>
+    <div
+      className="h-full flex flex-col w-full bg-yellow-300"
+      onClick={hideContextMenu}
+    >
       <div className="h-20 w-full bg-white border-b border-gray-300 dark:border-white dark:bg-slate-800 flex-shrink-0">
         <div className="container mx-auto flex justify-center items-center h-full">
           <div>
@@ -414,12 +417,14 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
               return (
                 <div
                   key={index}
-                  className={`flex items-center mb-2 ${false ? "flex-row-reverse" : "flex-row -ml-4"
-                    }`}
+                  className={`flex items-center mb-2 ${
+                    false ? "flex-row-reverse" : "flex-row -ml-4"
+                  }`}
                 >
                   <Image
-                    src={`/Frame_${m.author ? hashString(m.author as string) % 9 : 0
-                      }.png`}
+                    src={`/Profile_${
+                      m.author ? hashString(m.author as string) % 9 : 0
+                    }.png`}
                     alt=""
                     width={40}
                     height={40}
@@ -427,10 +432,9 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
                   />
                   <div className={"ml-2"}>
                     <p
-                      className={`font-semibold ${false
-                          ? "text-right text-black"
-                          : "text-gray-800"
-                        }`}
+                      className={`font-semibold ${
+                        false ? "text-right text-black" : "text-gray-800"
+                      }`}
                     >
                       {isCurrentUser ? (
                         <>
@@ -453,10 +457,9 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
                       )}
                     </p>
                     <div
-                      className={`px-2 py-1 w-fit h-fit ${isCurrentUser
-                          ? "text-black"
-                          : "text-black"
-                        }`}
+                      className={`px-2 py-1 w-fit h-fit ${
+                        isCurrentUser ? "text-black" : "text-black"
+                      }`}
                       onContextMenu={(e) => handleContextMenu(e, index)}
                     >
                       <div className="font-normal dark:text-white">

@@ -43,55 +43,55 @@ const ChatItem: React.FC<GroupItemProps> = ({
 
   return (
     <div
-  className={`h-28 w-full items-center flex cursor-pointer border-b border-gray-200 dark:border-white text-black ${
-    selectedGroup == (chat.isPrivate ? chat.name : chat.roomName) &&
-    isPrivate == chat.isPrivate
-      ? "bg-white bg-opacity-40 font-bold"
-      : "hover:bg-white hover:bg-opacity-5"
-  } transition duration-250`}
->
-  <div
-    className={`h-28 w-full items-center flex `}
-    onClick={() => {
-      const name = chat.isPrivate ? chat.name : chat.roomName;
-      onGroupClick(name, chat.isPrivate);
-    }}
-  >
-    <Image
-      src={`/${chat.name.includes("(") ? "G" : "Frame_"}${
-        chat.name ? hashString(chat.name.split(" (")[0] as string) % 9 : 0
-      }.png`}
-      alt=""
-      width={75}
-      height={50}
-      className="ml-6 rounded-full"
-    ></Image>
-    <div className="font-roboto ml-6">
-      <p
-        className={`text-black dark:text-white text-xl mt-2 ${
-          selectedGroup == (chat.isPrivate ? chat.name : chat.roomName)
-            ? "font-bold"
-            : ""
-        }`}
+      className={`h-28 w-full items-center flex cursor-pointer border-b border-gray-200 dark:border-white text-black ${
+        selectedGroup == (chat.isPrivate ? chat.name : chat.roomName) &&
+        isPrivate == chat.isPrivate
+          ? "bg-white bg-opacity-40 font-bold"
+          : "hover:bg-white hover:bg-opacity-5"
+      } transition duration-250`}
+    >
+      <div
+        className={`h-28 w-full items-center flex `}
+        onClick={() => {
+          const name = chat.isPrivate ? chat.name : chat.roomName;
+          onGroupClick(name, chat.isPrivate);
+        }}
       >
-        {chat.name}
-      </p>
+        <Image
+          src={`/${chat.name.includes("(") ? "G" : "Profile_"}${
+            chat.name ? hashString(chat.name.split(" (")[0] as string) % 9 : 0
+          }.png`}
+          alt=""
+          width={75}
+          height={50}
+          className="ml-6 rounded-full"
+        ></Image>
+        <div className="font-roboto ml-6">
+          <p
+            className={`text-black dark:text-white text-xl mt-2 ${
+              selectedGroup == (chat.isPrivate ? chat.name : chat.roomName)
+                ? "font-bold"
+                : ""
+            }`}
+          >
+            {chat.name}
+          </p>
+        </div>
+      </div>
+      <div className={`ml-auto h-28 items-center flex`}>
+        {isFavourite ? (
+          <HeartIconSolid
+            className="h-8 w-8 mr-6 text-[#ff0049]"
+            onClick={handleHeartClick}
+          />
+        ) : (
+          <HeartIcon
+            className="h-8 w-8 mr-6 text-gray-500"
+            onClick={handleHeartClick}
+          />
+        )}
+      </div>
     </div>
-  </div>
-  <div className={`ml-auto h-28 items-center flex`}>
-    {isFavourite ? (
-      <HeartIconSolid
-        className="h-8 w-8 mr-6 text-[#ff0049]"
-        onClick={handleHeartClick}
-      />
-    ) : (
-      <HeartIcon
-        className="h-8 w-8 mr-6 text-gray-500"
-        onClick={handleHeartClick}
-      />
-    )}
-  </div>
-</div>
   );
 };
 

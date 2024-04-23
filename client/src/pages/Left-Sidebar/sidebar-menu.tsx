@@ -78,80 +78,80 @@ const SidebarMenu = ({ setPage, currentPage }: SidebarMenuProps) => {
         <div className="flex flex-col justify-center items-center p-8 space-y-8">
           <div className="flex flex-row justify-center items-center space-x-2">
             <Image
-              src={`/Frame_0.png`}
+              src={`/Profile_0.png`}
               alt=""
               width={125}
               height={125}
               className={" hover:bg-gray-100 rounded-3xl p-4 "}
-              onClick={() => handleSetProfileURL("/Frame_0.png")}
+              onClick={() => handleSetProfileURL("/Profile_0.png")}
             />
             <Image
-              src={`/Frame_1.png`}
+              src={`/Profile_1.png`}
               alt=""
               width={125}
               height={125}
               className={" hover:bg-gray-100 rounded-3xl p-4 "}
-              onClick={() => handleSetProfileURL("/Frame_1.png")}
+              onClick={() => handleSetProfileURL("/Profile_1.png")}
             />
             <Image
-              src={`/Frame_2.png`}
+              src={`/Profile_2.png`}
               alt=""
               width={125}
               height={125}
               className={" hover:bg-gray-100 rounded-3xl p-4 "}
-              onClick={() => handleSetProfileURL("/Frame_2.png")}
-            />
-          </div>
-          <div className="flex flex-row justify-center items-center space-x-2">
-            <Image
-              src={`/Frame_3.png`}
-              alt=""
-              width={125}
-              height={125}
-              className={" hover:bg-gray-100 rounded-3xl p-4 "}
-              onClick={() => handleSetProfileURL("/Frame_3.png")}
-            />
-            <Image
-              src={`/Frame_4.png`}
-              alt=""
-              width={125}
-              height={125}
-              className={" hover:bg-gray-100 rounded-3xl p-4 "}
-              onClick={() => handleSetProfileURL("/Frame_4.png")}
-            />
-            <Image
-              src={`/Frame_5.png`}
-              alt=""
-              width={125}
-              height={125}
-              className={" hover:bg-gray-100 rounded-3xl p-4 "}
-              onClick={() => handleSetProfileURL("/Frame_5.png")}
+              onClick={() => handleSetProfileURL("/Profile_2.png")}
             />
           </div>
           <div className="flex flex-row justify-center items-center space-x-2">
             <Image
-              src={`/Frame_6.png`}
+              src={`/Profile_3.png`}
               alt=""
               width={125}
               height={125}
               className={" hover:bg-gray-100 rounded-3xl p-4 "}
-              onClick={() => handleSetProfileURL("/Frame_6.png")}
+              onClick={() => handleSetProfileURL("/Profile_3.png")}
             />
             <Image
-              src={`/Frame_7.png`}
+              src={`/Profile_4.png`}
               alt=""
               width={125}
               height={125}
               className={" hover:bg-gray-100 rounded-3xl p-4 "}
-              onClick={() => handleSetProfileURL("/Frame_7.png")}
+              onClick={() => handleSetProfileURL("/Profile_4.png")}
             />
             <Image
-              src={`/Frame_8.png`}
+              src={`/Profile_5.png`}
               alt=""
               width={125}
               height={125}
               className={" hover:bg-gray-100 rounded-3xl p-4 "}
-              onClick={() => handleSetProfileURL("/Frame_8.png")}
+              onClick={() => handleSetProfileURL("/Profile_5.png")}
+            />
+          </div>
+          <div className="flex flex-row justify-center items-center space-x-2">
+            <Image
+              src={`/Profile_6.png`}
+              alt=""
+              width={125}
+              height={125}
+              className={" hover:bg-gray-100 rounded-3xl p-4 "}
+              onClick={() => handleSetProfileURL("/Profile_6.png")}
+            />
+            <Image
+              src={`/Profile_7.png`}
+              alt=""
+              width={125}
+              height={125}
+              className={" hover:bg-gray-100 rounded-3xl p-4 "}
+              onClick={() => handleSetProfileURL("/Profile_.png")}
+            />
+            <Image
+              src={`/Profile_8.png`}
+              alt=""
+              width={125}
+              height={125}
+              className={" hover:bg-gray-100 rounded-3xl p-4 "}
+              onClick={() => handleSetProfileURL("/Profile_.png")}
             />
           </div>
         </div>
@@ -178,7 +178,7 @@ const SidebarMenu = ({ setPage, currentPage }: SidebarMenuProps) => {
           onClick={toggleDropdown}
         >
           <Image
-            src={profileURL || "/Frame_0.png"}
+            src={profileURL || "/Profile_0.png"}
             alt=""
             width={50}
             height={50}

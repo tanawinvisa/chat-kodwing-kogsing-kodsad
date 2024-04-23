@@ -100,7 +100,7 @@ const Friends: React.FC<ChatFriendsProps> = ({
               }}
             >
               <Image
-                src={`/Frame_${
+                src={`/Profile_${
                   friend ? hashString(friend as string) % 9 : 0
                 }.png`}
                 alt=""
