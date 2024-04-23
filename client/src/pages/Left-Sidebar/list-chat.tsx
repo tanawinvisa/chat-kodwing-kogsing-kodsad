@@ -109,7 +109,7 @@ const Chats: React.FC<allChatsProps> = ({
           pin: false,
         },
       ],
-      isPrivate: false,
+      isPrivate: true,
       likedList: ["m2"],
     },
     {
@@ -120,7 +120,7 @@ const Chats: React.FC<allChatsProps> = ({
           roomName: "Room 2",
           name: "User2",
           message: "How are you?",
-          isPrivate: true,
+          isPrivate: false,
           pin: false,
         },
       ],
@@ -139,7 +139,7 @@ const Chats: React.FC<allChatsProps> = ({
           pin: false,
         },
       ],
-      isPrivate: false,
+      isPrivate: true,
       likedList: ["m1"],
     },
   ];
@@ -163,18 +163,18 @@ const Chats: React.FC<allChatsProps> = ({
         </form>
       </div>
       <div className="h-full overflow-y-auto">
-        {mockChatList.map((group) =>
-          group.chat.map((chat, index) => (
+        {mockChatList
+          .map((chat, index) => (
             <ChatItem
               key={index}
-              chat={chat}
               setLikedList={setLikedList}
               onGroupClick={onGroupClick}
               selectedGroup={selectedGroup}
-              isPrivate={group.isPrivate}
+              isPrivate={isPrivate}
+              chat={chat}
             />
           ))
-        )}
+          .sort(customSort)}
       </div>
     </div>
   );
