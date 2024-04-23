@@ -87,7 +87,7 @@ const Groups: React.FC<ChatGroupsProps> = ({
   }, []);
 
   const validateGroupName = (groupName: string): string => {
-    groupName = "G: " + groupName;
+    groupName = "Group: " + groupName;
 
     return groupName;
   };
