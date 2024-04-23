@@ -414,7 +414,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
               return (
                 <div
                   key={index}
-                  className={`flex items-start mb-2 ${isCurrentUser ? "flex-row-reverse" : "flex-row -ml-4"
+                  className={`flex items-center mb-2 ${false ? "flex-row-reverse" : "flex-row -ml-4"
                     }`}
                 >
                   <Image
@@ -427,26 +427,26 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
                   />
                   <div className={"ml-2"}>
                     <p
-                      className={`font-semibold ${isCurrentUser
+                      className={`font-semibold ${false
                           ? "text-right text-black"
                           : "text-gray-800"
                         }`}
                     >
                       {isCurrentUser ? (
                         <>
-                          <span className="text-gray-500 text-sm ml-2">
-                            {formatTime(m.time)}
-                          </span>
-                          <span className="text-black text-sm ml-2">
+                          <span className="px-2 text-[#D73B55] text-sm font-bold">
                             {m.author}
+                          </span>
+                          <span className="px-2 text-gray-500 text-sm ml-2">
+                            {formatTime(m.time)}
                           </span>
                         </>
                       ) : (
                         <>
-                          <span className="text-black text-sm">
+                          <span className="px-2 text-[#00a9ff] text-sm font-bold">
                             {m.author}
                           </span>
-                          <span className="text-gray-500 text-sm ml-2">
+                          <span className="px-2 text-gray-500 text-sm ml-2">
                             {formatTime(m.time)}
                           </span>
                         </>
@@ -454,12 +454,12 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
                     </p>
                     <div
                       className={`px-2 py-1 w-fit h-fit ${isCurrentUser
-                          ? "ml-auto bg-white text-black rounded-lg rounded-tr-none rounded-br-lg"
-                          : "bg-gray-200 text-black rounded-lg rounded-bl-lg rounded-tl-none"
+                          ? "text-black"
+                          : "text-black"
                         }`}
                       onContextMenu={(e) => handleContextMenu(e, index)}
                     >
-                      <div className="break-words max-w-[20ch]">
+                      <div className="font-normal dark:text-white">
                         <span>{m.message}</span>
                       </div>
                     </div>
