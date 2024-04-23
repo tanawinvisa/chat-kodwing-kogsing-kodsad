@@ -42,9 +42,9 @@ const Friends: React.FC<ChatFriendsProps> = ({
   //   ) as HTMLInputElement;
   //   setSearchTerm(searchQuery.value);
   // };
-  // const filteredFriends = friendList.filter((name) =>
-  //   name.toLowerCase().includes(searchTerm.toLowerCase())
-  // );
+  const filteredFriends = friendList.filter((name) =>
+    name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   useEffect(() => {
     socket.emit("get-all-users");
@@ -86,7 +86,7 @@ const Friends: React.FC<ChatFriendsProps> = ({
         </form>
       </div>
       <div className="h-full overflow-y-auto">
-        {filteredMockFriends.map((friend, index) => {
+        {filteredFriends.map((friend, index) => {
           return (
             <div
               className={`h-28 w-full border-b border-gray-300 dark:border-white items-center flex cursor-pointer ${

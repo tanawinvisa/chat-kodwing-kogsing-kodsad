@@ -99,10 +99,10 @@ const Chats: React.FC<allChatsProps> = ({
   //   ) as HTMLInputElement;
   //   setSearchTerm(searchQuery.value);
   // };
-  // const filteredChats = chatList.filter((chat) => {
-  //   const name = chat.isPrivate ? chat.name : chat.roomName;
-  //   return name.toLowerCase().includes(searchTerm.toLowerCase());
-  // });
+  const filteredChats = chatList.filter((chat) => {
+    const name = chat.isPrivate ? chat.name : chat.roomName;
+    return name.toLowerCase().includes(searchTerm.toLowerCase());
+  });
   const customSort = (a: JSX.Element, b: JSX.Element) => {
     const aIndex = likedList.indexOf(a.props.chat.name);
     const bIndex = likedList.indexOf(b.props.chat.name);
@@ -176,7 +176,7 @@ const Chats: React.FC<allChatsProps> = ({
         </form>
       </div>
       <div className="h-full overflow-y-auto">
-        {filteredMockChatList
+        {filteredChats
           .map((chat, index) => (
             <ChatItem
               key={index}

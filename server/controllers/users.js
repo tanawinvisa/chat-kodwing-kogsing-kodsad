@@ -1,121 +1,188 @@
-const User = require('../models/User');
-const Room = require('../models/Room');
-const Message = require('../models/Message');
-const mongoose = require('mongoose');
-const ObjectId = mongoose.Types.ObjectId;
+const ObjectId = require("mongodb").ObjectId;
 
-const addUser = async (userId, username) => {
-  const user = await User.findOneAndUpdate({ username: username }, { $setOnInsert: { id: userId, rooms: [] } }, { upsert: true, new: true });
-  console.log(user);
+// user = {id, username, rooms: {name, pin}}
+// room = {room, userCount, latestMessage, private}
+// message = {id, author, message, time, room}
+const users = [];
+const rooms = [];
+const messages = [];
+
+const addUser = (userId, username) => {
+  // register user if not exist
+  const index = users.findIndex((user) => user.username === username);
+  if (index === -1) {
+    const user = { id: userId, username: username, rooms: [] };
+    users.push(user);
+  } else {
+    users[index].id = userId;
+  }
+  console.log(users);
 };
 
-const joinRoom = async (userId, username, roomName, isPrivate = false) => {
-  const room = await Room.findOneAndUpdate({ room: roomName }, { $setOnInsert: { userCount: 0, latestMessage: '', private: isPrivate } }, { upsert: true, new: true });
-  const user = await User.findOneAndUpdate({ username: username }, { $addToSet: { rooms: room._id } }, { new: true });
-  await Room.updateOne({ _id: room._id }, { $inc: { userCount: 1 } });
-  console.log(room);
-  console.log(user);
+const joinRoom = (userId, username, room, private) => {
+  // if new room, then create room
+  let roomIndex = rooms.findIndex((r) => r.room === room);
+  if (private === undefined) {
+    private = false;
+  } else {
+    private = true;
+  }
+  if (roomIndex === -1) {
+    rooms.push({
+      room: room,
+      userCount: 0,
+      latestMessage: "",
+      private: private,
+    });
+  }
+  roomIndex = rooms.findIndex((r) => r.room === room);
+
+  // register user into the room and add room user count
+  const index = users.findIndex((user) => user.username === username);
+  if (index !== -1) {
+    const userRoomIndex = users[index].rooms.findIndex((r) => r.name === room);
+    if (userRoomIndex === -1) {
+      users[index].rooms.push({ name: room, pin: false });
+      rooms[roomIndex].userCount += 1;
+    }
+  } else {
+    const user = {
+      id: userId,
+      username: username,
+      rooms: [{ name: room, pin: false }],
+    };
+    users.push(user);
+    rooms[roomIndex].userCount += 1;
+  }
+  console.log(rooms);
+  console.log(users);
 };
 
-const leaveRoom = async (username, roomName) => {
-  const user = await User.findOne({ username: username });
-  if (!user || user.rooms.length === 0) return;
-
-  const room = await Room.findOne({ room: roomName });
-  if (!room) return;
-
-  await User.updateOne({ _id: user._id }, { $pull: { rooms: room._id } });
-  const updatedRoom = await Room.findByIdAndUpdate(room._id, { $inc: { userCount: -1 } }, { new: true });
-
-  if (updatedRoom.userCount === 0) {
-    await Room.deleteOne({ _id: updatedRoom._id });
+const leaveRoom = (username, room) => {
+  // remove specific room from user room list
+  const user = users.find((user) => user.username === username);
+  if (user.rooms.length === 0) {
+    return;
+  }
+  const specificRoom = user.rooms.findIndex((r) => r === room);
+  if (specificRoom !== -1) {
+    user.rooms.splice(specificRoom, 1);
+  }
+  // decrease user count
+  const roomIndex = rooms.findIndex((r) => r.room === room);
+  rooms[roomIndex].userCount -= 1;
+  // if no user in the room, then remove room
+  if (rooms[roomIndex].userCount === 0) {
+    rooms.splice(roomIndex, 1);
   }
 };
 
-const getCurrentUser = async (username) => {
-  const user = await User.findOne({ username: username });
-  return user;
+const getCurrentUser = (username) => {
+  return users.find((user) => user.username === username);
 };
 
-const getAllUsers = async () => {
-  const users = await User.find({});
-  return users.map(user => user.username);
+const getAllUsers = () => {
+  const allUsers = users.map((user) => user.username);
+  return allUsers;
 };
 
-const getAllRooms = async (isPrivate) => {
-  const rooms = await Room.find({ private: isPrivate });
-  return rooms;
+const getAllRooms = (private) => {
+  const filteredRoom = rooms.filter((r) => r.private === private);
+  return filteredRoom;
 };
 
-const getUserRooms = async (username) => {
-  const user = await User.findOne({ username: username }).populate('rooms');
-  return user ? user.rooms : [];
-};
-
-const pinChat = async (username, roomName, pinStatus) => {
-  const user = await User.findOne({ username: username });
-  if (!user) return;
-
-  const room = await Room.findOne({ room: roomName });
-  if (!room) return;
-
-  const roomIndex = user.rooms.indexOf(room._id);
-  if (roomIndex !== -1) {
-    // Assuming the user document includes information about pinned status per room
-    // This might require schema changes to store room-specific preferences
-    user.rooms[roomIndex].pin = pinStatus;
-    await user.save();
-    console.log(user.rooms);
+const getUserRooms = (username) => {
+  const user = users.find((user) => user.username === username);
+  if (user) {
+    const userRooms = [];
+    if (user.rooms !== []) {
+      user.rooms.map((userRoom) => {
+        const room = rooms.find((r) => r.room === userRoom.name);
+        userRooms.push({ room: room, pin: userRoom.pin });
+      });
+    }
+    return userRooms;
+  } else {
+    return [];
   }
 };
 
-const updateLatestMessage = async (messageData) => {
-  const room = await Room.findOne({ room: messageData.room });
-  if (!room) return false;
-
-  const message = new Message({
-    author: messageData.author,
-    message: messageData.message,
-    time: new Date(),
-    room: room._id
-  });
-  await message.save();
-
-  room.latestMessage = message._id;
-  await room.save();
-
-  return true;
+const pinChat = (username, room, pinStatus) => {
+  const index = users.findIndex((user) => user.username === username);
+  if (index !== -1) {
+    const roomIndex = users[index].rooms.findIndex((r) => r.name === room);
+    if (roomIndex !== -1) {
+      users[index].rooms[roomIndex].pin = pinStatus;
+    }
+  }
+  console.log(users[index].rooms);
 };
 
-const sendMessage = async (messageData) => {
-  const message = await updateLatestMessage(messageData);
-  if (!message) return null;
-  console.log('Message sent and updated in room');
-  return message;
+const updateLatestMessage = (message) => {
+  const index = rooms.findIndex((r) => r.room === message.room);
+  if (index != -1) {
+    rooms[index].latestMessage = message;
+    return true;
+  } else {
+    return false;
+  }
 };
 
-const unsendMessage = async (messageId) => {
-  await Message.findByIdAndDelete(messageId);
-};
-
-const announceMessage = async (messageId) => {
-  await Message.findByIdAndUpdate(messageId, { announce: true });
-};
-
-const removeAnnounce = async (roomName) => {
-  const room = await Room.findOne({ room: roomName });
-  if (!room) return;
-
-  await Message.updateMany({ room: room._id }, { announce: false });
-};
-
-const getMessageInRoom = async (roomName) => {
-  const room = await Room.findOne({ room: roomName });
-  if (!room) return [];
-
-  const messages = await Message.find({ room: room._id });
+const sendMessage = (message) => {
+  let m = null;
+  if (
+    message &&
+    message.message !== undefined &&
+    message.message.trim() !== ""
+  ) {
+    m = {
+      id: new ObjectId().toString(),
+      author: message.author,
+      message: message.message,
+      time: message.time,
+      room: message.room,
+      announce: false,
+    };
+    messages.push(m);
+    done = updateLatestMessage(m);
+  }
   console.log(messages);
-  return messages;
+  console.log(rooms);
+  return m;
+};
+
+const unsendMessage = (message) => {
+  if (message) {
+    const index = messages.findIndex(
+      (m) =>
+        m.id === message.id &&
+        m.message === message.message &&
+        m.room === message.room
+    );
+    messages.splice(index, 1);
+  }
+};
+
+const announceMessage = (message) => {
+  if (message) {
+    const index = messages.findIndex(
+      (m) => m.id === message.id && m.message === message.message
+    );
+    if (index !== -1) {
+      messages[index].announce = true;
+    }
+  }
+};
+
+const removeAnnounce = (room) => {
+  const roomMessages = messages.filter((m) => m.room === room);
+  roomMessages.map((m) => (m.announce = false));
+};
+
+const getMessageInRoom = (room) => {
+  const msg = messages.filter((m) => m.room === room);
+  console.log(msg);
+  return msg;
 };
 
 module.exports = {

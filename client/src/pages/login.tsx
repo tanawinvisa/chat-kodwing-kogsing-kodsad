@@ -5,7 +5,9 @@ import { io } from "socket.io-client";
 import ThemeButton from "./theme_button";
 
 const URL = process.env.NEXT_PUBLIC_URL ?? "";
-export const socket = io(URL, { transports: ["websocket"] });
+export const socket = io("http://localhost:5000", {
+  transports: ["websocket"],
+});
 
 const validateUsername = (username: string) => {
   // Check if the input contains only alphanumeric characters and does not exceed 10 characters
@@ -39,10 +41,12 @@ const Login = () => {
     <div className="flex flex-1 flex-col items-center bg-blue-gray-100 w-screen h-screen justify-center dark:bg-slate-800">
       <div className="border relative border-blue-gray-200 bg-gradient-to-r from-blue-gray-100 to-blue-gray-200 rounded-xl flex flex-col justify-center items-center px-12 py-16">
         <div className="absolute top-4 right-3">
-          <ThemeButton/>
+          <ThemeButton />
         </div>
         <Image src="/logo.png" alt="" width={200} height={100}></Image>
-        <h1 className="mt-5 font-bold text-4xl text-[#4a5568] dark:text-white">Running Sadly</h1>
+        <h1 className="mt-5 font-bold text-4xl text-[#4a5568] dark:text-white">
+          Running Sadly
+        </h1>
         <form
           className="w-max mt-10 flex flex-col justify-center items-center space-y-12"
           onSubmit={handleLogin}

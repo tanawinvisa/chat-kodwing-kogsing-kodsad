@@ -102,10 +102,11 @@ const Groups: React.FC<ChatGroupsProps> = ({
       return;
     }
     if (groupName) {
-      socket.emit("join-room", {
+      const response = socket.emit("join-room", {
         username: username,
         room: validateGroupName(groupName.value),
       });
+      console.log(response);
     }
     socket.emit("get-all-rooms");
     groupName.value = "";
@@ -170,7 +171,7 @@ const Groups: React.FC<ChatGroupsProps> = ({
       </div>
       <div className="w-full overflow-y-auto">
         <div className="flex flex-col">
-          {filteredMockGroups.map((group, index) => (
+          {groupList.map((group, index) => (
             <GroupItem
               onGroupClick={onGroupClick}
               key={index}
