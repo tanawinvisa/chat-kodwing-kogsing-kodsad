@@ -111,7 +111,7 @@ const Chats: React.FC<allChatsProps> = ({
         },
       ],
       isPrivate: false,
-      likedList: [],
+      likedList: ['m2'],
     },
     {
       id: '2',
@@ -141,7 +141,7 @@ const Chats: React.FC<allChatsProps> = ({
         },
       ],
       isPrivate: false,
-      likedList: [],
+      likedList: ['m1'],
     },
   ];
 
@@ -168,12 +168,11 @@ const Chats: React.FC<allChatsProps> = ({
       .map((chat, index) => (
         <ChatItem
           key={index}
-          chat={chat}
           setLikedList={setLikedList}
           onGroupClick={onGroupClick}
           selectedGroup={selectedGroup}
-          isPrivate={isPrivate}
-        />
+          isPrivate={isPrivate} 
+          chat={chat}        />
       ))
       .sort(customSort)}
   </div>

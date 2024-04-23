@@ -20,9 +20,9 @@ const GroupItem: React.FC<GroupItemProps> = ({
 }) => {
   return (
     <div
-      className={`h-28 w-full cursor-pointer border-b border-borderColor items-center flex p-4 rounded-lg ${group.groupName === selectedGroup && !isPrivate
-          ? "bg-purple bg-opacity-40"
-          : "hover:bg-gray-200"
+      className={`h-28 w-full cursor-pointer border-b dark:border-white border-gray-300 items-center  flex ${group.groupName === selectedGroup && !isPrivate
+        ? "bg-white bg-opacity-40 font-bold"
+        : "hover:bg-white hover:bg-opacity-5"
         } transition duration-200`}
       onClick={() => {
         onGroupClick(group.groupName, false);
@@ -39,7 +39,7 @@ const GroupItem: React.FC<GroupItemProps> = ({
       ></Image>
       <div className="font-roboto ml-6">
         <p
-          className={`text-black text-xl dark:text-white${group.groupName === selectedGroup && !isPrivate ? "font-bold" : ""
+          className={`text-black dark:text-white text-xl dark:text-white${group.groupName === selectedGroup && !isPrivate ? "font-bold" : ""
             }`}
         >
           {`${group.groupName} (${group.people})`}

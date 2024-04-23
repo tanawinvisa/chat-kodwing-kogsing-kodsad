@@ -101,15 +101,15 @@ const Groups: React.FC<ChatGroupsProps> = ({
   ];
 
   return (
-    <div className="bg-white w-1/3 border-r dark:bg-gray-800 border-gray-300 px-4 py-2 h-full flex flex-col">
-      <div className="h-20 w-full border-b border-gray-300 dark:border-white flex items-center justify-between">
+    <div className="bg-white w-1/3 border-r dark:bg-gray-800 border-gray-300 py-2 h-full flex flex-col">
+      <div className="h-20 w-full border-b border-gray-300 dark:border-white flex items-center justify-center space-x-4">
         <form
           className="w-2/3 flex items-center relative"
           onSubmit={handleSearch}
         >
           <input
             type="text"
-            className="w-full h-12 rounded-2xl pl-5 text-black pr-10 border-gray-200 border-[2px] outline-none"
+            className="w-full h-12 rounded-2xl pl-5 text-black pr-10 bg-white dark:bg-gray-400 dark:placeholder:text-gray-700 border-[2px] outline-none"
             placeholder="Search"
             name="search_user"
           />
@@ -119,7 +119,7 @@ const Groups: React.FC<ChatGroupsProps> = ({
         </form>
 
         <button
-          className="w-auto items-center flex justify-center h-12 rounded-2xl text-white bg-[#00a9ff] hover:bg-purple-600 transition duration-300 px-2"
+          className="w-auto items-center flex px-2 justify-center h-12 rounded-2xl text-white bg-[#00a9ff] hover:bg-purple-600 transition duration-300"
           onClick={() => setShowCreateGroupPopup(true)} // Show the popup on button click
         >
           Create Group
