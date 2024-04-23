@@ -25,6 +25,54 @@ const Chats: React.FC<allChatsProps> = ({
   selectedGroup,
   isPrivate,
 }) => {
+  const mockChatList = [
+    {
+      id: "1",
+      name: "Chat 1",
+      chat: [
+        {
+          roomName: "Room 1",
+          name: "User1",
+          message: "Hello",
+          isPrivate: false,
+          pin: false,
+        },
+      ],
+      isPrivate: true,
+      likedList: ["m2"],
+    },
+    {
+      id: "2",
+      name: "Chat 2",
+      chat: [
+        {
+          roomName: "Room 2",
+          name: "User2",
+          message: "How are you?",
+          isPrivate: false,
+          pin: false,
+        },
+      ],
+      isPrivate: true,
+      likedList: ["m3"],
+    },
+    {
+      id: "3",
+      name: "Chat 3",
+      chat: [
+        {
+          roomName: "Room 3",
+          name: "User3",
+          message: "Good morning",
+          isPrivate: false,
+          pin: false,
+        },
+      ],
+      isPrivate: true,
+      likedList: ["m1"],
+    },
+  ];
+
   const [likedList, setLikedList] = useState<String[]>([]);
   const [chatList, setChatList] = useState<Chat[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -38,10 +86,23 @@ const Chats: React.FC<allChatsProps> = ({
     ) as HTMLInputElement;
     setSearchTerm(searchQuery.value);
   };
-  const filteredChats = chatList.filter((chat) => {
-    const name = chat.isPrivate ? chat.name : chat.roomName;
-    return name.toLowerCase().includes(searchTerm.toLowerCase());
-  });
+
+  const filteredMockChatList = mockChatList.filter((chat) =>
+    chat.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // ****** BELOW IS FOR UN-MOCK DATA **********///////
+  // const handleSearch = (e: FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   const searchQuery = e.currentTarget.elements.namedItem(
+  //     "search_user"
+  //   ) as HTMLInputElement;
+  //   setSearchTerm(searchQuery.value);
+  // };
+  // const filteredChats = chatList.filter((chat) => {
+  //   const name = chat.isPrivate ? chat.name : chat.roomName;
+  //   return name.toLowerCase().includes(searchTerm.toLowerCase());
+  // });
   const customSort = (a: JSX.Element, b: JSX.Element) => {
     const aIndex = likedList.indexOf(a.props.chat.name);
     const bIndex = likedList.indexOf(b.props.chat.name);
@@ -96,54 +157,6 @@ const Chats: React.FC<allChatsProps> = ({
     };
   }, [username]);
 
-  const mockChatList = [
-    {
-      id: "1",
-      name: "Chat 1",
-      chat: [
-        {
-          roomName: "Room 1",
-          name: "User1",
-          message: "Hello",
-          isPrivate: false,
-          pin: false,
-        },
-      ],
-      isPrivate: true,
-      likedList: ["m2"],
-    },
-    {
-      id: "2",
-      name: "Chat 2",
-      chat: [
-        {
-          roomName: "Room 2",
-          name: "User2",
-          message: "How are you?",
-          isPrivate: false,
-          pin: false,
-        },
-      ],
-      isPrivate: true,
-      likedList: ["m3"],
-    },
-    {
-      id: "3",
-      name: "Chat 3",
-      chat: [
-        {
-          roomName: "Room 3",
-          name: "User3",
-          message: "Good morning",
-          isPrivate: false,
-          pin: false,
-        },
-      ],
-      isPrivate: true,
-      likedList: ["m1"],
-    },
-  ];
-
   return (
     <div className="bg-white w-1/3 dark:bg-gray-800 border-r border-gray-200">
       <div className="h-20 w-full border-b border-gray-200 items-center flex justify-center py-4">
@@ -163,7 +176,7 @@ const Chats: React.FC<allChatsProps> = ({
         </form>
       </div>
       <div className="h-full overflow-y-auto">
-        {mockChatList
+        {filteredMockChatList
           .map((chat, index) => (
             <ChatItem
               key={index}

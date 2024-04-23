@@ -28,6 +28,14 @@ const Groups: React.FC<ChatGroupsProps> = ({
   selectedGroup,
   isPrivate,
 }) => {
+  const mock = [
+    { groupName: "Group 1", people: 5 },
+    { groupName: "Group 2", people: 3 },
+    { groupName: "Group 3", people: 4 },
+    { groupName: "Group 4", people: 2 },
+    { groupName: "Group 5", people: 6 },
+  ];
+
   const [groupList, setGroupList] = useState<Group[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [showCreateGroupPopup, setShowCreateGroupPopup] = useState(false); // State for showing the create group popup
@@ -41,6 +49,22 @@ const Groups: React.FC<ChatGroupsProps> = ({
     ) as HTMLInputElement;
     setSearchTerm(searchQuery.value);
   };
+
+  const filteredMockGroups = mock.filter((group) =>
+    group.groupName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // const handleSearch = (e: FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   const searchQuery = e.currentTarget.elements.namedItem(
+  //     "search_user"
+  //   ) as HTMLInputElement;
+  //   setSearchTerm(searchQuery.value);
+  // };
+
+  // const filteredGroups = groupList.filter((group) =>
+  //   group.groupName.toLowerCase().includes(searchTerm.toLowerCase())
+  // );
 
   useEffect(() => {
     socket.emit("get-all-rooms");
@@ -87,18 +111,6 @@ const Groups: React.FC<ChatGroupsProps> = ({
     groupName.value = "";
     setShowCreateGroupPopup(false); // Close the popup after creating the group
   };
-
-  const filteredGroups = groupList.filter((group) =>
-    group.groupName.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  const mock = [
-    { groupName: 'Group 1', people: 5 },
-    { groupName: 'Group 2', people: 3 },
-    { groupName: 'Group 3', people: 4 },
-    { groupName: 'Group 4', people: 2 },
-    { groupName: 'Group 5', people: 6 },
-  ];
 
   return (
     <div className="bg-white w-1/3 border-r dark:bg-gray-800 border-gray-300 h-full flex flex-col">
@@ -158,7 +170,7 @@ const Groups: React.FC<ChatGroupsProps> = ({
       </div>
       <div className="w-full overflow-y-auto">
         <div className="flex flex-col">
-          {mock.map((group, index) => (
+          {filteredMockGroups.map((group, index) => (
             <GroupItem
               onGroupClick={onGroupClick}
               key={index}
