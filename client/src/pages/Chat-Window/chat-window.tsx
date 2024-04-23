@@ -341,10 +341,10 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
 
   return (
     <div className="h-full flex flex-col w-full bg-yellow-300" onClick={hideContextMenu}>
-      <div className="h-20 w-full bg-white border-b border-gray-300 flex-shrink-0">
+      <div className="h-20 w-full bg-white border-b border-gray-300 dark:border-white dark:bg-slate-800 flex-shrink-0">
         <div className="container mx-auto flex justify-center items-center h-full">
           <div>
-            <p className="text-3xl font-roboto text-black font-medium">
+            <p className="text-3xl font-roboto text-black dark:text-white font-medium">
               {selectedGroup}
             </p>
           </div>
@@ -352,7 +352,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
       </div>
 
       <div
-        className="bg-white h-full w-full flex-grow overflow-y-auto"
+        className="bg-white h-full w-full flex-grow dark:bg-slate-700 overflow-y-auto"
         ref={messagesEndRef}
       >
         <div className="px-8 pt-8">
@@ -418,13 +418,13 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
           </div>
         </div>
       </div>
-      <div className="bg-white h-20 w-full p-5 flex-shrink-0 flex items-center">
+      <div className="bg-white dark:bg-slate-700 h-20 w-full p-5 flex-shrink-0 flex items-center">
         <form
           onSubmit={handleSendMessage}
           className="relative w-full flex-grow mr-4"
         >
           <input
-            className="p-2 w-full rounded-xl bg-gray-200 text-black hover:border-indigo-600 h-14"
+            className="px-5 py-2 w-full outline-none border-gray-300 dark:bg-gray-400 dark:placeholder:text-gray-700 border-[2px] rounded-xl text-black h-14"
             type="text"
             placeholder="Message..."
             value={message}
