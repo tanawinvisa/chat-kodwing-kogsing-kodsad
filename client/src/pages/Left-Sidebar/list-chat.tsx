@@ -163,7 +163,7 @@ const Chats: React.FC<allChatsProps> = ({
       </div>
     </form>
   </div>
-  <div className="h-[80%] overflow-y-auto">
+  <div className="h-full overflow-y-auto">
     {mockChatList
       .map((chat, index) => (
         <ChatItem

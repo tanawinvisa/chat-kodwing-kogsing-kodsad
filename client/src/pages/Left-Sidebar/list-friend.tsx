@@ -73,7 +73,7 @@ const Friends: React.FC<ChatFriendsProps> = ({
       </div>
     </form>
   </div>
-  <div className="h-[80%] overflow-y-auto">
+  <div className="h-full overflow-y-auto">
     {mock.map((friend, index) => {
       return (
         <div
