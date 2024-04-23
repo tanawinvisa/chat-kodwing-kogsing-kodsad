@@ -48,7 +48,7 @@ const SidebarMenu = ({ setPage, currentPage }: SidebarMenuProps) => {
   }, [dropdownRef]);
 
   return (
-    <div className="w-full bg-[#FFFC00] dark:bg-slate-500 flex text-black justify-between items-center font-sans px-4 py-2">
+    <div className="w-full bg-[#FFFC00] dark:bg-gray-900 flex text-black justify-between items-center font-sans px-4 py-2">
       <div className="flex flex-row items-center space-x-6 w-1/3">
         <Image
         src="/logo.png"
@@ -87,7 +87,7 @@ const SidebarMenu = ({ setPage, currentPage }: SidebarMenuProps) => {
         type="button"
         name="friends"
         className={`flex items-center justify-center w-14 h-14 rounded-full ${
-          room === "friends" ? "text-yellow-700 bg-white" : "hover:text-yellow-500"
+          room === "friends" ? "text-yellow-700 bg-white" : "hover:text-yellow-500 dark:hover:scale-110 dark:text-white"
         } transition duration-250`}
         onClick={() => {
           setPage("friends");
@@ -100,8 +100,8 @@ const SidebarMenu = ({ setPage, currentPage }: SidebarMenuProps) => {
       <button
         type="button"
         name="groups"
-        className={`flex items-center justify-center w-14 h-14 rounded-full  ${
-          room === "groups" ? "text-yellow-700 bg-white" : "hover:text-yellow-500"
+        className={`flex items-center justify-center w-14 h-14 rounded-full ${
+          room === "groups" ? "text-yellow-700 bg-white " : "hover:text-yellow-500 dark:hover:scale-110 dark:text-white"
         } transition duration-250`}
         onClick={() => {
           setPage("groups");
@@ -109,13 +109,13 @@ const SidebarMenu = ({ setPage, currentPage }: SidebarMenuProps) => {
           console.log("groups");
         }}
       >
-        <UserGroupIcon className="h-6 w-6" />
+        <UserGroupIcon className="h-6 w-6 "/>
       </button>
       <button
         type="button"
         name="all-chats"
-        className={`flex items-center justify-center w-14 h-14 rounded-full ${
-          room === "all-chats" ? "text-yellow-700 bg-white" : "hover:bg-white"
+        className={`flex items-center justify-center w-14 h-14 rounded-full  ${
+          room === "all-chats" ? "text-yellow-700 bg-white" : "hover:text-yellow-500 dark:hover:scale-110 dark:text-white"
         } transition duration-250`}
         onClick={() => {
           setPage("all-chats");
@@ -129,7 +129,7 @@ const SidebarMenu = ({ setPage, currentPage }: SidebarMenuProps) => {
       <button
         type="button"
         name="all-chats"
-        className={`flex items-center justify-center w-14 h-14 rounded-full hover:text-yellow-500 transition duration-250`}
+        className={`flex items-center justify-center w-14 h-14 rounded-full dark:hover:scale-110 hover:text-yellow-500 dark:text-white transition duration-250`}
         onClick={handleLogout}
       >
         <ExitToAppIcon className="h-8 w-8" />

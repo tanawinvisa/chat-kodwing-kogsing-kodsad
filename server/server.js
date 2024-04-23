@@ -1,101 +1,51 @@
-const express = require("express");
-const dotenv = require("dotenv");
-const cors = require("cors");
+const express = require('express');
+const dotenv = require('dotenv');
+const connectDB = require('./config/db');
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
+const mongoSanitize = require('express-mongo-sanitize');
+const helmet = require('helmet');
+const { xss } = require('express-xss-sanitizer');
+const rateLimit = require('express-rate-limit');
+const hpp = require('hpp');
 const http = require("http");
 const Server = require("socket.io");
-const {
-  joinRoom,
-  getAllUsers,
-  leaveRoom,
-  addUser,
-  getAllRooms,
-  sendMessage,
-  getMessageInRoom,
-  getUserRooms,
-  unsendMessage,
-  announceMessage,
-  removeAnnounce,
-  pinChat,
-} = require("./utils/user");
 
-// Load env vars
-dotenv.config({ path: "../.env" });
+const userRoutes = require('./routes/users');  // Import the routes
+
+const socketControllers = require('./controllers/socket'); // Import the handlers
+
+// Load environment variables
+dotenv.config({ path: "config/config.env" });
+
+// Connect to database
+connectDB();
 
 const app = express();
-app.use(cors);
+
+// Middleware
+app.use(express.json());
+app.use(cookieParser());
+app.use(mongoSanitize());
+app.use(helmet());
+app.use(xss());
+
+// Rate limiting
+const limiter = rateLimit({
+    windowMs: 10 * 60 * 1000, // 10 minutes
+    max: 100 // limit each IP to 100 requests per windowMs
+});
+app.use(limiter);
+app.use(hpp());
+app.use(cors());
+
+// Routes
+app.use('/api/users', userRoutes);  // Use the user routes
+
 const server = http.createServer(app);
 const io = Server(server);
 
-io.on("connection", (socket) => {
-  socket.emit("userId", socket.id);
-  socket.on("register", ({ username }) => {
-    addUser(socket.id, username);
-    socket.emit("userId", socket.id);
-    // console.log(socket.id);
-  });
-
-  socket.on("join-room", ({ username, room, private }) => {
-    // console.log(room);
-    joinRoom(socket.id, username, room, private);
-    socket.join(room);
-  });
-
-  socket.on("send-message", (message) => {
-    // console.log(message.room);
-    const m = sendMessage(message);
-    if (m) {
-      io.to(message.room).emit("message", m);
-    }
-  });
-
-  socket.on("unsend-message", (message) => {
-    unsendMessage(message);
-    io.to(message.room).emit("remove-message", message);
-  });
-
-  socket.on("announce-message", (message) => {
-    announceMessage(message);
-    io.to(message.room).emit("new-announce", message);
-  });
-
-  socket.on("remove-announce", ({ room }) => {
-    removeAnnounce(room);
-    io.to(room).emit("announce-removed", room);
-  });
-
-  socket.on("get-past-messages", ({ room }) => {
-    // console.log(room);
-    const past_messages = getMessageInRoom(room);
-    io.to(room).emit("past-messages", { room: room, messages: past_messages });
-  });
-
-  socket.on("get-all-users", () => {
-    const users = getAllUsers();
-    io.emit("users", users);
-  });
-
-  socket.on("get-all-rooms", (private) => {
-    const getPrivate = !(private === undefined);
-    const rooms = getAllRooms(getPrivate);
-    io.emit("rooms", rooms);
-  });
-
-  socket.on("get-user-rooms", ({ username }) => {
-    const rooms = getUserRooms(username);
-    io.to(socket.id).emit("user-rooms", rooms);
-  });
-
-  socket.on("pin-chat", ({ username, room, pinStatus }) => {
-    pinChat(username, room, pinStatus);
-  });
-
-  socket.on("leave-room", ({ username, room }) => {
-    leaveRoom(username, room);
-    socket.leave(room);
-  });
-});
-
-console.log("s", process.env.PORT);
+socketControllers(io);
 
 server.listen(process.env.PORT, () => {
   console.log(`Server start on port ${process.env.PORT}`);
