@@ -16,7 +16,6 @@ const Friends: React.FC<ChatFriendsProps> = ({
   selectedFriend,
   isPrivate,
 }) => {
-  const mock = ["John", "Jane", "Doe", "Smith", "Alice", "Bob"];
 
   const [friendList, setFriendList] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -31,17 +30,6 @@ const Friends: React.FC<ChatFriendsProps> = ({
     setSearchTerm(searchQuery.value);
   };
 
-  const filteredMockFriends = mock.filter((name) =>
-    name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  // const handleSearch = (e: FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   const searchQuery = e.currentTarget.elements.namedItem(
-  //     "search_user"
-  //   ) as HTMLInputElement;
-  //   setSearchTerm(searchQuery.value);
-  // };
   const filteredFriends = friendList.filter((name) =>
     name.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -53,11 +41,13 @@ const Friends: React.FC<ChatFriendsProps> = ({
   useEffect(() => {
     const friendListener = (data: string[]) => {
       const allUsers = data;
+      console.log("CALL", allUsers)
       if (username !== undefined && typeof username === "string") {
         const currentUser = data.indexOf(username);
-        if (currentUser !== -1) {
-          allUsers.splice(currentUser, 1);
-        }
+        // Exclude myself out
+        // if (currentUser !== -1) {
+        //   allUsers.splice(currentUser, 1);
+        // }
       }
       setFriendList(data);
     };
@@ -89,20 +79,18 @@ const Friends: React.FC<ChatFriendsProps> = ({
         {filteredFriends.map((friend, index) => {
           return (
             <div
-              className={`h-28 w-full border-b border-gray-300 dark:border-white items-center flex cursor-pointer ${
-                friend == selectedFriend && isPrivate
+              className={`h-28 w-full border-b border-gray-300 dark:border-white items-center flex cursor-pointer ${friend == selectedFriend && isPrivate
                   ? "bg-white bg-opacity-40"
                   : "hover:bg-white hover:bg-opacity-5"
-              } transition duration-250`}
+                } transition duration-250`}
               key={index}
               onClick={() => {
                 onGroupClick(friend, true);
               }}
             >
               <Image
-                src={`/Profile_${
-                  friend ? hashString(friend as string) % 9 : 0
-                }.png`}
+                src={`/Profile_${friend ? hashString(friend as string) % 9 : 0
+                  }.png`}
                 alt=""
                 width={75}
                 height={50}
@@ -110,9 +98,8 @@ const Friends: React.FC<ChatFriendsProps> = ({
               ></Image>
               <div className="font-roboto ml-6">
                 <p
-                  className={`text-black dark:text-white text-xl ${
-                    friend === selectedFriend && isPrivate ? "font-bold" : ""
-                  }`}
+                  className={`text-black dark:text-white text-xl ${friend === selectedFriend && isPrivate ? "font-bold" : ""
+                    }`}
                 >
                   {friend}
                 </p>
