@@ -5,7 +5,7 @@ import { io } from "socket.io-client";
 import ThemeButton from "./theme_button";
 
 const URL = process.env.NEXT_PUBLIC_URL ?? "";
-export const socket = io("http://localhost:5001", {
+export const socket = io("172.20.10.2:5000", {
   transports: ["websocket"],
 });
 
